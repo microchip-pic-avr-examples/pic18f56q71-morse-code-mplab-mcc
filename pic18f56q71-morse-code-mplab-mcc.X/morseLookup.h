@@ -13,11 +13,16 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+
+#include "mcc_generated_files/system/pins.h"
     
 //LED ON / OFF
-#define LED_ON() { LED0_SetLow(); } while(0)
-#define LED_OFF() { LED0_SetHigh(); } while(0)
+#define LED_ON() do { LED0_SetLow(); } while(0)
+#define LED_OFF() do { LED0_SetHigh(); } while(0)
     
+#define SELECT_TX_DECODE() do { RW0_SetLow(); } while(0)
+#define SELECT_USER_DECODE() do { RW0_SetHigh(); } while(0)
+
 //Depth of the character buffer
 #define CHAR_BUFFER_SIZE 128
     

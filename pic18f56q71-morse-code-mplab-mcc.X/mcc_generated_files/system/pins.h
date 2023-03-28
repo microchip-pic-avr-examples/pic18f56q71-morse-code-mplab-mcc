@@ -49,6 +49,26 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set RA0 aliases
+#define SW0_TRIS                 TRISAbits.TRISA0
+#define SW0_LAT                  LATAbits.LATA0
+#define SW0_PORT                 PORTAbits.RA0
+#define SW0_WPU                  WPUAbits.WPUA0
+#define SW0_OD                   ODCONAbits.ODCA0
+#define SW0_ANS                  ANSELAbits.ANSELA0
+#define SW0_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
+#define SW0_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
+#define SW0_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
+#define SW0_GetValue()           PORTAbits.RA0
+#define SW0_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
+#define SW0_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
+#define SW0_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
+#define SW0_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
+#define SW0_SetPushPull()        do { ODCONAbits.ODCA0 = 0; } while(0)
+#define SW0_SetOpenDrain()       do { ODCONAbits.ODCA0 = 1; } while(0)
+#define SW0_SetAnalogMode()      do { ANSELAbits.ANSELA0 = 1; } while(0)
+#define SW0_SetDigitalMode()     do { ANSELAbits.ANSELA0 = 0; } while(0)
+
 // get/set RB4 aliases
 #define IO_RB4_TRIS                 TRISBbits.TRISB4
 #define IO_RB4_LAT                  LATBbits.LATB4
@@ -108,6 +128,12 @@
 #define LED0_SetOpenDrain()       do { ODCONCbits.ODCC7 = 1; } while(0)
 #define LED0_SetAnalogMode()      do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define LED0_SetDigitalMode()     do { ANSELCbits.ANSELC7 = 0; } while(0)
+
+// get/set virtual Pin RW0 aliases
+#define RW0_SetHigh()            do { LATWbits.LATW0 = 1; } while(0)
+#define RW0_SetLow()             do { LATWbits.LATW0 = 0; } while(0)
+#define RW0_Toggle()             do { LATWbits.LATW0 = ~LATWbits.LATW0; } while(0)
+#define RW0_GetValue()           PORTWbits.RW0
 
 /**
  * @ingroup  pinsdriver

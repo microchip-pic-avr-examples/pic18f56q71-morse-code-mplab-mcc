@@ -50,14 +50,14 @@ void TU16A_Initialize(void)
     //Stop Timer
     TU16ACON0bits.ON = 0;
 
-    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT disabled; CLR disabled; OSEN enabled;  
-    TU16ACON1 = 0x40;
-    //STOP At PR Match; RESET No hardware reset; START No hardware Start (Always On); CSYNC enabled; EPOL non inverted;  
-    TU16AHLT = 0x43;
-    //CLK NCO1;   
-    TU16ACLK = 0x12;
-    //ERS TUIN0PPS;  
-    TU16AERS = 0x0;
+    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT enabled; CLR disabled; OSEN disabled;  
+    TU16ACON1 = 0x10;
+    //STOP No hardware Stop; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL non inverted;  
+    TU16AHLT = 0x68;
+    //CLK CLKREF_OUT;   
+    TU16ACLK = 0x9;
+    //ERS CLC4;  
+    TU16AERS = 0x11;
     //PS 0;  
     TU16APS = 0x0;
     //PRH 0; 
@@ -66,8 +66,8 @@ void TU16A_Initialize(void)
     TU16APRL = 0x64;
     //TMRH 0; 
     TU16ATMRH = 0x0;
-    //TMRL 1; 
-    TU16ATMRL = 0x1;
+    //TMRL 100; 
+    TU16ATMRL = 0x64;
 
     // Clearing IF flag before enabling the interrupt.
     TU16ACON1bits.PRIF = 0;
@@ -78,8 +78,8 @@ void TU16A_Initialize(void)
     //Enable TUI interrupt
     PIE5bits.TU16AIE = 1;
 
-    //CIE disabled; ZIE disabled; PRIE enabled; RDSEL read; OPOL low; OM pulse mode; CPOL falling edge; ON disabled;  
-    TU16ACON0 = 0x4;
+    //CIE enabled; ZIE disabled; PRIE enabled; RDSEL read; OPOL low; OM pulse mode; CPOL rising edge; ON disabled;  
+    TU16ACON0 = 0x45;
 }
 
 inline void TU16A_Start(void)
@@ -211,6 +211,11 @@ inline void TU16A_InterruptFlagsClear(void)
 
 void __interrupt(irq(TU16A),base(8)) TU16A_ISR(void)
 {
+    if(TU16A_InterruptHandler)
+    {
+        TU16A_InterruptHandler();
+    }
+    
     if(TU16ACON1bits.PRIF == 1)
     {
         TU16ACON1bits.PRIF = 0;
@@ -222,10 +227,6 @@ void __interrupt(irq(TU16A),base(8)) TU16A_ISR(void)
     if(TU16ACON1bits.CIF == 1)
     {
         TU16ACON1bits.CIF = 0;
-    }
-    if(TU16A_InterruptHandler)
-    {
-        TU16A_InterruptHandler();
     }
 
     // add your TU16A interrupt custom code

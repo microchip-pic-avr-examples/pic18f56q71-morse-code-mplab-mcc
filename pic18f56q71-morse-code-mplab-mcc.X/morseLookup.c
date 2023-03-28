@@ -40,6 +40,9 @@ void morseInit(void)
     
     //Init UART
     UART2_Enable();
+    
+    //Decode internal transmitter
+    SELECT_TX_DECODE();
 }
 
 //Internal function to setup the morse code variables
@@ -58,15 +61,26 @@ void morseSetup(char c)
         //Uppercase
         index = c - 'A';
     }
-    else
+    else if ((c >= 'a') && (c <= 'z'))
     {
         index = c - 'a';
+    }
+    else
+    {
+        //Invalid - put a space in
+        charBitsRemaining = 0;
+        state = MORSE_WORD_BREAK;
+        return;
     }
 
     currentC = morseTableAZ[index];
     charBitsRemaining = morseLengthsAZ[index];
     
     if (state == MORSE_WORD_BREAK)
+    {
+        state = MORSE_CHAR;
+    }
+    else if (state == MORSE_COMPLETE)
     {
         state = MORSE_CHAR;
     }
@@ -140,6 +154,10 @@ void morseStateMachine(void)
             {
                 morseSetup(ringBuffer_getChar(&rBuffer));
             }
+            else
+            {
+                state = MORSE_COMPLETE;
+            }
             
             LED_OFF();
             break;
@@ -176,7 +194,7 @@ void morseStart(void)
     if ((!ringBuffer_isEmpty(&rBuffer)) && (state == MORSE_COMPLETE))
     {
         morseSetup(ringBuffer_getChar(&rBuffer));
-        Timer2_Start();
+        morseStateMachine();
     }
 }
 

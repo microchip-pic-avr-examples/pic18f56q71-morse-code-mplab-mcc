@@ -53,8 +53,8 @@ void PORTW_Initialize(void)
     //IN LATW1; 
     PORTWIN1 = 0x0;
 
-    //IN LATW2; 
-    PORTWIN2 = 0x0;
+    //IN CLC3_OUT; 
+    PORTWIN2 = 0x8;
 
     //IN LATW3; 
     PORTWIN3 = 0x0;

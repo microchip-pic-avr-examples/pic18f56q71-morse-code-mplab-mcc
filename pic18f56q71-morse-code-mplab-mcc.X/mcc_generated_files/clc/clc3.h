@@ -1,15 +1,14 @@
-/** 
- * TMR Generated Driver API Header File
+/**
+ * CLC3 Generated Driver API Header File.
+ * 
+ * @file clc3.h
+ * 
+ * @defgroup  clc3 CLC3
+ * 
+ * @brief This file contains the API prototypes for the CLC3 driver.
  *
- * @file timer_interface.h
- *  
- * @defgroup timer_interface Timer interface
- *
- * @brief This header file provides interfaces to Timer APIs.
- *
- * @version TMR_interface Version 1.0.1
- */
-
+ * @version CLC3 Driver Version 1.0.1
+*/
 /*
 © [2023] Microchip Technology Inc. and its subsidiaries.
 
@@ -31,32 +30,34 @@
     THIS SOFTWARE.
 */
 
-#ifndef TMR_INTERFACE_H
-#define TMR_INTERFACE_H
+#ifndef CLC3_H
+ #define CLC3_H
+
+#include <xc.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 /**
- * @brief This file contains API prototypes and other data types for the Timer interface.
- * @{
+ * @ingroup clc3
+ * @brief  Initializes the CLC3. This routine configures the CLC3 specific control registers.
+ * @param None.
+ * @return None.
+ * 
  */
+void CLC3_Initialize(void);
 
-#include<stddef.h>
-        
+
 /**
- @ingroup timer_interface
- @struct TMR_INTERFACE
- @brief This structure contains the interfaces to Timer module
+ * @ingroup clc3
+ * @brief Returns the output pin status of the CLC module.
+ * @param  None.
+ * @retval True - Output is 1.
+ * @retval False - Output is 0.
  */
- 
-struct TMR_INTERFACE
-{
-    void (*Initialize)(void);
-    void (*Start)(void);
-    void (*Stop)(void);
-    void (*PeriodCountSet)(size_t count);
-    void (*TimeoutCallbackRegister)(void (* CallbackHandler)(void));
-    void (*Tasks)(void);
-};
+bool CLC3_OutputStatusGet(void);
+
+#endif  // CLC3_H
 /**
- * @}
- */
-#endif //TMR_INTERFACE_H
+ End of File
+*/
+

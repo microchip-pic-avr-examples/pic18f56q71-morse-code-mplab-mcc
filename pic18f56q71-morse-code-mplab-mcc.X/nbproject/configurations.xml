@@ -7,6 +7,17 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
+        <logicalFolder name="clc" displayName="clc" projectFiles="true">
+          <itemPath>mcc_generated_files/clc/clc1.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc2.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc3.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc4.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc5.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc6.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="clkref" displayName="clkref" projectFiles="true">
+          <itemPath>mcc_generated_files/clkref/clkref.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="nco" displayName="nco" projectFiles="true">
           <itemPath>mcc_generated_files/nco/nco1.h</itemPath>
         </logicalFolder>
@@ -21,6 +32,8 @@
           <itemPath>mcc_generated_files/timer/timer_interface.h</itemPath>
           <itemPath>mcc_generated_files/timer/tmr2.h</itemPath>
           <itemPath>mcc_generated_files/timer/tu16a.h</itemPath>
+          <itemPath>mcc_generated_files/timer/tmr4.h</itemPath>
+          <itemPath>mcc_generated_files/timer/tu16b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
@@ -44,6 +57,21 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
+        <logicalFolder name="clc" displayName="clc" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/clc/src/clc1.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc2.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc3.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc5.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc4.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc6.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="clkref" displayName="clkref" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/clkref/src/clkref.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="nco" displayName="nco" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/nco/src/nco1.c</itemPath>
@@ -62,6 +90,8 @@
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/timer/src/tmr2.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/tu16a.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/tmr4.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/tu16b.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">

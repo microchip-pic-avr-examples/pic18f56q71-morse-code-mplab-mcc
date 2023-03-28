@@ -1,15 +1,14 @@
-/** 
- * TMR Generated Driver API Header File
+/**
+ * CLKREF Generated Driver File.
+ * 
+ * @file clkref.c
+ * 
+ * @ingroup  clkref
+ * 
+ * @brief This file contains the API implementation for the CLKREF driver.
  *
- * @file timer_interface.h
- *  
- * @defgroup timer_interface Timer interface
- *
- * @brief This header file provides interfaces to Timer APIs.
- *
- * @version TMR_interface Version 1.0.1
- */
-
+ * @version CLKREF Driver Version 2.0.0
+*/
 /*
 © [2023] Microchip Technology Inc. and its subsidiaries.
 
@@ -31,32 +30,25 @@
     THIS SOFTWARE.
 */
 
-#ifndef TMR_INTERFACE_H
-#define TMR_INTERFACE_H
+/**
+  Section: Included Files
+*/
+
+#include <xc.h>
+#include "../clkref.h"
 
 /**
- * @brief This file contains API prototypes and other data types for the Timer interface.
- * @{
- */
+  Section: CLKREF APIs
+*/
 
-#include<stddef.h>
-        
-/**
- @ingroup timer_interface
- @struct TMR_INTERFACE
- @brief This structure contains the interfaces to Timer module
- */
- 
-struct TMR_INTERFACE
+void CLKREF_Initialize(void)
 {
-    void (*Initialize)(void);
-    void (*Start)(void);
-    void (*Stop)(void);
-    void (*PeriodCountSet)(size_t count);
-    void (*TimeoutCallbackRegister)(void (* CallbackHandler)(void));
-    void (*Tasks)(void);
-};
+    // CLK LFINTOSC; 
+    CLKRCLK = 0x2;
+
+    // CLKREN enabled; CLKRDC 50% Duty Cycle; CLKRDIV BaseClock/32; 
+    CLKRCON = 0x95;
+}
 /**
- * @}
- */
-#endif //TMR_INTERFACE_H
+ End of File
+*/

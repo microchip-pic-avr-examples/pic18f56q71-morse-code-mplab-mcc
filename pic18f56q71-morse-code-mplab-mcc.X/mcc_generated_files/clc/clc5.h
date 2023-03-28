@@ -1,15 +1,14 @@
-/** 
- * TMR Generated Driver API Header File
+/**
+ * CLC5 Generated Driver API Header File.
+ * 
+ * @file clc5.h
+ * 
+ * @defgroup  clc5 CLC5
+ * 
+ * @brief This file contains the API prototypes for the CLC5 driver.
  *
- * @file timer_interface.h
- *  
- * @defgroup timer_interface Timer interface
- *
- * @brief This header file provides interfaces to Timer APIs.
- *
- * @version TMR_interface Version 1.0.1
- */
-
+ * @version CLC5 Driver Version 1.0.1
+*/
 /*
 © [2023] Microchip Technology Inc. and its subsidiaries.
 
@@ -31,32 +30,34 @@
     THIS SOFTWARE.
 */
 
-#ifndef TMR_INTERFACE_H
-#define TMR_INTERFACE_H
+#ifndef CLC5_H
+ #define CLC5_H
+
+#include <xc.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 /**
- * @brief This file contains API prototypes and other data types for the Timer interface.
- * @{
+ * @ingroup clc5
+ * @brief  Initializes the CLC5. This routine configures the CLC5 specific control registers.
+ * @param None.
+ * @return None.
+ * 
  */
+void CLC5_Initialize(void);
 
-#include<stddef.h>
-        
+
 /**
- @ingroup timer_interface
- @struct TMR_INTERFACE
- @brief This structure contains the interfaces to Timer module
+ * @ingroup clc5
+ * @brief Returns the output pin status of the CLC module.
+ * @param  None.
+ * @retval True - Output is 1.
+ * @retval False - Output is 0.
  */
- 
-struct TMR_INTERFACE
-{
-    void (*Initialize)(void);
-    void (*Start)(void);
-    void (*Stop)(void);
-    void (*PeriodCountSet)(size_t count);
-    void (*TimeoutCallbackRegister)(void (* CallbackHandler)(void));
-    void (*Tasks)(void);
-};
+bool CLC5_OutputStatusGet(void);
+
+#endif  // CLC5_H
 /**
- * @}
- */
-#endif //TMR_INTERFACE_H
+ End of File
+*/
+
