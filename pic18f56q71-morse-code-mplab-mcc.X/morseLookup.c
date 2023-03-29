@@ -40,9 +40,6 @@ void morseInit(void)
     
     //Init UART
     UART2_Enable();
-    
-    //Decode internal transmitter
-    SELECT_TX_DECODE();
 }
 
 //Internal function to setup the morse code variables
@@ -128,14 +125,14 @@ void morseStateMachine(void)
                 state = MORSE_BIT_BREAK;
             }
             
-            LED_ON();
+            MORSE_ON();
             break;
         }
         case MORSE_BIT_BREAK:
         {
             nPR = DOT_DASH_BREAK;
             state = MORSE_CHAR;
-            LED_OFF();
+            MORSE_OFF();
             break;
         }
         case MORSE_CHAR_BREAK:
@@ -143,7 +140,7 @@ void morseStateMachine(void)
             nPR = CHAR_BREAK;
                         
             state = MORSE_CHAR;
-            LED_OFF();
+            MORSE_OFF();
             break;
         }
         case MORSE_WORD_BREAK:
@@ -159,7 +156,7 @@ void morseStateMachine(void)
                 state = MORSE_COMPLETE;
             }
             
-            LED_OFF();
+            MORSE_OFF();
             break;
         }
         case MORSE_COMPLETE_WAIT:
@@ -167,13 +164,13 @@ void morseStateMachine(void)
             //Wait the min period before finishing
             nPR = DOT_DASH_BREAK;
             state = MORSE_COMPLETE;
-            LED_OFF();
+            MORSE_OFF();
             break;
         }
         case MORSE_COMPLETE:
         {
             //Done with TX
-            LED_OFF();
+            MORSE_OFF();
             return;
         }
     }

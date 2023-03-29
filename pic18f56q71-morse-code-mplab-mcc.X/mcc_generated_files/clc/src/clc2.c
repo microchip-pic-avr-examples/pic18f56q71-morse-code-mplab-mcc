@@ -40,8 +40,8 @@ void CLC2_Initialize(void)
     
     // SLCT 0x1; 
     CLCSELECT = 0x1;
-    // LCG1POL not_inverted; LCG2POL inverted; LCG3POL not_inverted; LCG4POL not_inverted; LCPOL not_inverted; 
-    CLCnPOL = 0x2;
+    // LCG1POL not_inverted; LCG2POL inverted; LCG3POL not_inverted; LCG4POL not_inverted; LCPOL inverted; 
+    CLCnPOL = 0x82;
     // LCD1S CLCIN0 (CLCIN0PPS); 
     CLCnSEL0 = 0x0;
     // LCD2S TMR4; 

@@ -129,11 +129,37 @@
 #define LED0_SetAnalogMode()      do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define LED0_SetDigitalMode()     do { ANSELCbits.ANSELC7 = 0; } while(0)
 
+// get/set RD7 aliases
+#define IO_RD7_TRIS                 TRISDbits.TRISD7
+#define IO_RD7_LAT                  LATDbits.LATD7
+#define IO_RD7_PORT                 PORTDbits.RD7
+#define IO_RD7_WPU                  WPUDbits.WPUD7
+#define IO_RD7_OD                   ODCONDbits.ODCD7
+#define IO_RD7_ANS                  ANSELDbits.ANSELD7
+#define IO_RD7_SetHigh()            do { LATDbits.LATD7 = 1; } while(0)
+#define IO_RD7_SetLow()             do { LATDbits.LATD7 = 0; } while(0)
+#define IO_RD7_Toggle()             do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0)
+#define IO_RD7_GetValue()           PORTDbits.RD7
+#define IO_RD7_SetDigitalInput()    do { TRISDbits.TRISD7 = 1; } while(0)
+#define IO_RD7_SetDigitalOutput()   do { TRISDbits.TRISD7 = 0; } while(0)
+#define IO_RD7_SetPullup()          do { WPUDbits.WPUD7 = 1; } while(0)
+#define IO_RD7_ResetPullup()        do { WPUDbits.WPUD7 = 0; } while(0)
+#define IO_RD7_SetPushPull()        do { ODCONDbits.ODCD7 = 0; } while(0)
+#define IO_RD7_SetOpenDrain()       do { ODCONDbits.ODCD7 = 1; } while(0)
+#define IO_RD7_SetAnalogMode()      do { ANSELDbits.ANSELD7 = 1; } while(0)
+#define IO_RD7_SetDigitalMode()     do { ANSELDbits.ANSELD7 = 0; } while(0)
+
 // get/set virtual Pin RW0 aliases
 #define RW0_SetHigh()            do { LATWbits.LATW0 = 1; } while(0)
 #define RW0_SetLow()             do { LATWbits.LATW0 = 0; } while(0)
 #define RW0_Toggle()             do { LATWbits.LATW0 = ~LATWbits.LATW0; } while(0)
 #define RW0_GetValue()           PORTWbits.RW0
+
+// get/set virtual Pin RW1 aliases
+#define RW1_SetHigh()            do { LATWbits.LATW1 = 1; } while(0)
+#define RW1_SetLow()             do { LATWbits.LATW1 = 0; } while(0)
+#define RW1_Toggle()             do { LATWbits.LATW1 = ~LATWbits.LATW1; } while(0)
+#define RW1_GetValue()           PORTWbits.RW1
 
 /**
  * @ingroup  pinsdriver

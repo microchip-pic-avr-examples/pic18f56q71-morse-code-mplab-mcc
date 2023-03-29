@@ -50,24 +50,24 @@ void TU16B_Initialize(void)
     //Stop Timer
     TU16BCON0bits.ON = 0;
 
-    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT enabled; CLR disabled; OSEN disabled;  
-    TU16BCON1 = 0x10;
-    //STOP At PR Match; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL non inverted;  
-    TU16BHLT = 0x6B;
+    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT disabled; CLR disabled; OSEN enabled;  
+    TU16BCON1 = 0x40;
+    //STOP Rising ERS Edge; RESET At PR Match; START No hardware Start (Always On); CSYNC enabled; EPOL non inverted;  
+    TU16BHLT = 0x4E;
     //CLK CLKREF_OUT;   
     TU16BCLK = 0x9;
-    //ERS CLC5;  
-    TU16BERS = 0x12;
+    //ERS CLC3;  
+    TU16BERS = 0x10;
     //PS 0;  
     TU16BPS = 0x0;
-    //PRH 0; 
-    TU16BPRH = 0x0;
-    //PRL 100; 
-    TU16BPRL = 0x64;
-    //TMRH 0; 
-    TU16BTMRH = 0x0;
-    //TMRL 100; 
-    TU16BTMRL = 0x64;
+    //PRH 3; 
+    TU16BPRH = 0x3;
+    //PRL 232; 
+    TU16BPRL = 0xE8;
+    //TMRH 3; 
+    TU16BTMRH = 0x3;
+    //TMRL 232; 
+    TU16BTMRL = 0xE8;
 
     // Clearing IF flag before enabling the interrupt.
     TU16BCON1bits.PRIF = 0;

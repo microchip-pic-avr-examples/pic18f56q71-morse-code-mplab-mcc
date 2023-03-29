@@ -16,13 +16,16 @@ extern "C" {
 
 #include "mcc_generated_files/system/pins.h"
     
-//LED ON / OFF
-#define LED_ON() do { LED0_SetLow(); } while(0)
-#define LED_OFF() do { LED0_SetHigh(); } while(0)
+//Morse Code TX
+#define MORSE_ON() do { RW1_SetHigh(); LED0_SetLow(); } while(0)
+#define MORSE_OFF() do { RW1_SetLow(); LED0_SetHigh(); } while(0)
     
+//Select input to decoder
 #define SELECT_TX_DECODE() do { RW0_SetLow(); } while(0)
 #define SELECT_USER_DECODE() do { RW0_SetHigh(); } while(0)
 
+#define MORSE_TIME_BASE 50
+    
 //Depth of the character buffer
 #define CHAR_BUFFER_SIZE 128
     

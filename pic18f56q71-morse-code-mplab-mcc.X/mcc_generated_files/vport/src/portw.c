@@ -71,17 +71,17 @@ void PORTW_Initialize(void)
     //IN LATW7; 
     PORTWIN7 = 0x0;
 
-    //CLK TMR2_OUT; 
-    PORTWCLK = 0x19;
+    //CLK FOSC; 
+    PORTWCLK = 0x0;
 
-    //DF 0xff; 
-    PORTWDF = 0xFF;
+    //DF 0x0; 
+    PORTWDF = 0x0;
 
     //PORTW 0; 
     PORTW = 0x0;
 
-    //PWCLKEN enabled; 
-    VPORTCON = 0x1;
+    //PWCLKEN disabled; 
+    VPORTCON = 0x0;
 
     //IOCWP
     IOCWP = 0x0;

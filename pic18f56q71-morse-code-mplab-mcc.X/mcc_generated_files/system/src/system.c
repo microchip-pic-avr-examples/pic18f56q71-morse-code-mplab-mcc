@@ -40,8 +40,6 @@ void SYSTEM_Initialize(void)
     CLC1_Initialize();
     CLC2_Initialize();
     CLC3_Initialize();
-    CLC4_Initialize();
-    CLC5_Initialize();
     CLC6_Initialize();
     CLKREF_Initialize();
     NCO1_Initialize();

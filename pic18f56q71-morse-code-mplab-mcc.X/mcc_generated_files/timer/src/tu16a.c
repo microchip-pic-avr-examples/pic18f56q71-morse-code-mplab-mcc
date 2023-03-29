@@ -52,22 +52,22 @@ void TU16A_Initialize(void)
 
     //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT enabled; CLR disabled; OSEN disabled;  
     TU16ACON1 = 0x10;
-    //STOP No hardware Stop; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL non inverted;  
-    TU16AHLT = 0x68;
+    //STOP Either ERS Edge; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL non inverted;  
+    TU16AHLT = 0x69;
     //CLK CLKREF_OUT;   
     TU16ACLK = 0x9;
-    //ERS CLC4;  
-    TU16AERS = 0x11;
+    //ERS CLC3;  
+    TU16AERS = 0x10;
     //PS 0;  
     TU16APS = 0x0;
-    //PRH 0; 
-    TU16APRH = 0x0;
-    //PRL 100; 
-    TU16APRL = 0x64;
+    //PRH 255; 
+    TU16APRH = 0xFF;
+    //PRL 255; 
+    TU16APRL = 0xFF;
     //TMRH 0; 
     TU16ATMRH = 0x0;
-    //TMRL 100; 
-    TU16ATMRL = 0x64;
+    //TMRL 4; 
+    TU16ATMRL = 0x4;
 
     // Clearing IF flag before enabling the interrupt.
     TU16ACON1bits.PRIF = 0;
@@ -78,8 +78,8 @@ void TU16A_Initialize(void)
     //Enable TUI interrupt
     PIE5bits.TU16AIE = 1;
 
-    //CIE enabled; ZIE disabled; PRIE enabled; RDSEL read; OPOL low; OM pulse mode; CPOL rising edge; ON disabled;  
-    TU16ACON0 = 0x45;
+    //CIE enabled; ZIE disabled; PRIE disabled; RDSEL read; OPOL low; OM pulse mode; CPOL rising edge; ON disabled;  
+    TU16ACON0 = 0x41;
 }
 
 inline void TU16A_Start(void)

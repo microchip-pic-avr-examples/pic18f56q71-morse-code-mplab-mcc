@@ -77,6 +77,8 @@ void UTMRB_callback(void)
     }
 }
 
+//#define USER_INPUT
+
 int main(void)
 {
     SYSTEM_Initialize();
@@ -91,16 +93,20 @@ int main(void)
     TU16A_InterruptHandlerSet(&UTMRA_callback);
     TU16B_InterruptHandlerSet(&UTMRB_callback);
     
-    LED0_SetDigitalOutput();
-    
     // Enable the Global High Interrupts 
     INTERRUPT_GlobalInterruptHighEnable(); 
 
     // Enable the Global Low Interrupts 
     INTERRUPT_GlobalInterruptLowEnable(); 
         
-//    TU16A_Start();
-//    TU16B_Start();
+    TU16A_Start();
+    TU16B_Start();
+    
+#ifdef USER_INPUT
+    SELECT_USER_DECODE();
+#else
+    SELECT_TX_DECODE();
+#endif
     
     //Define INIT_TEST to print "Hello World" on startup
 #ifdef INIT_TEST    
@@ -117,17 +123,19 @@ int main(void)
             {
                 case CAPTURE_UTMR:
                 {
-                    printf("Capture Event\r\nCapture = %d\r\n", TU16A_CaptureValueRead());
+                    TU16BCON1bits.CLR = 1;
+                    printf("Capture Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
+                    TU16B_Start();
                     break;
                 }
                 case PR_MATCH_UTMR:
                 {
-                    printf("PR Match Event\r\nCapture = %d\r\n", TU16A_CaptureValueRead());
+                    printf("PR Match Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
                     break;
                 }
                 case RESET_UTMR:
                 {
-                    printf("Reset Event\r\nCapture = %d\r\n", TU16A_CaptureValueRead());
+                    printf("Reset Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
                     break;
                 }
 
@@ -141,17 +149,19 @@ int main(void)
             {
                 case CAPTURE_UTMR:
                 {
-                    printf("Capture Event\r\nCapture = %d\r\n", TU16B_CaptureValueRead());
+                    printf("Capture Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
                     break;
                 }
                 case PR_MATCH_UTMR:
                 {
-                    printf("PR Match Event\r\nCapture = %d\r\n", TU16B_CaptureValueRead());
+                    printf("PR Match Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
+                    printf("PR = 0x%x\r\n", TU16BPR);
+                    TU16B_Stop();
                     break;
                 }
                 case RESET_UTMR:
                 {
-                    printf("Reset Event\r\nCapture = %d\r\n", TU16B_CaptureValueRead());
+                    printf("Reset Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
                     break;
                 }
 
