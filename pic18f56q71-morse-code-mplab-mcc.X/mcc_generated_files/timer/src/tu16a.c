@@ -50,8 +50,8 @@ void TU16A_Initialize(void)
     //Stop Timer
     TU16ACON0bits.ON = 0;
 
-    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT enabled; CLR disabled; OSEN disabled;  
-    TU16ACON1 = 0x10;
+    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT disabled; CLR disabled; OSEN disabled;  
+    TU16ACON1 = 0x0;
     //STOP Either ERS Edge; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL non inverted;  
     TU16AHLT = 0x69;
     //CLK CLKREF_OUT;   

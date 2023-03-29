@@ -46,6 +46,13 @@
  */
 void CLC3_Initialize(void);
 
+/**
+ * @ingroup clc
+ * @brief Sets the callback function for the interrupt event.
+ * @param *InterruptHandler - Callback function for the interrupt event.
+ * @return None.
+*/
+void CLC3_CLCI_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
  * @ingroup clc3

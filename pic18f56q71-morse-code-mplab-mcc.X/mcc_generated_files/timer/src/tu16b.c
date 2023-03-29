@@ -50,10 +50,10 @@ void TU16B_Initialize(void)
     //Stop Timer
     TU16BCON0bits.ON = 0;
 
-    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT disabled; CLR disabled; OSEN enabled;  
-    TU16BCON1 = 0x40;
-    //STOP Rising ERS Edge; RESET At PR Match; START No hardware Start (Always On); CSYNC enabled; EPOL non inverted;  
-    TU16BHLT = 0x4E;
+    //CIF disabled; ZIF disabled; PRIF disabled; CAPT disabled; LIMIT disabled; CLR disabled; OSEN disabled;  
+    TU16BCON1 = 0x0;
+    //STOP Either ERS Edge; RESET At Start and PR match; START Rising ERS edge; CSYNC enabled; EPOL inverted;  
+    TU16BHLT = 0xE9;
     //CLK CLKREF_OUT;   
     TU16BCLK = 0x9;
     //ERS CLC3;  
@@ -78,8 +78,8 @@ void TU16B_Initialize(void)
     //Enable TUI interrupt
     PIE10bits.TU16BIE = 1;
 
-    //CIE enabled; ZIE disabled; PRIE enabled; RDSEL read; OPOL low; OM pulse mode; CPOL rising edge; ON disabled;  
-    TU16BCON0 = 0x45;
+    //CIE enabled; ZIE disabled; PRIE enabled; RDSEL read; OPOL low; OM level mode; CPOL rising edge; ON disabled;  
+    TU16BCON0 = 0x65;
 }
 
 inline void TU16B_Start(void)

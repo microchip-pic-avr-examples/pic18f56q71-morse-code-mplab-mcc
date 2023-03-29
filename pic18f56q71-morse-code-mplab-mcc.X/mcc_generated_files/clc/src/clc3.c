@@ -34,6 +34,8 @@
 #include <xc.h>
 #include "../clc3.h"
 
+static void (*CLC3_CLCI_InterruptHandler)(void);
+static void CLC3_DefaultCLCI_ISR(void);
 
 void CLC3_Initialize(void)
 {
@@ -60,11 +62,38 @@ void CLC3_Initialize(void)
     CLCnGLS3 = 0x8;
     // LCOUT 0x00; 
     CLCDATA = 0x0;
-    // LCMODE AND-OR; LCINTN disabled; LCINTP disabled; LCEN enabled; 
-    CLCnCON = 0x80;
+    // LCMODE AND-OR; LCINTN disabled; LCINTP enabled; LCEN enabled; 
+    CLCnCON = 0x90;
 
+    // Clear the CLC interrupt flag
+    PIR7bits.CLC3IF = 0;
+    //Configure interrupt handlers
+    CLC3_CLCI_SetInterruptHandler(CLC3_DefaultCLCI_ISR);
+    // Enabling CLC3 interrupt.
+    PIE7bits.CLC3IE = 1;
 }
 
+void __interrupt(irq(CLC3),base(8)) CLC3_ISR()
+{   
+    // Clear the CLC interrupt flag
+    PIR7bits.CLC3IF = 0;
+
+    if (CLC3_CLCI_InterruptHandler != NULL)
+    {
+        CLC3_CLCI_InterruptHandler();
+    }
+}
+
+void CLC3_CLCI_SetInterruptHandler(void (* InterruptHandler)(void))
+{
+    CLC3_CLCI_InterruptHandler = InterruptHandler;
+}
+
+static void CLC3_DefaultCLCI_ISR(void)
+{
+    //Add your interrupt code here or
+    //Use CLC3_CLCI_SetInterruptHandler() function to use custom ISR
+}
 
 bool CLC3_OutputStatusGet(void)
 {

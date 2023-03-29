@@ -62,6 +62,7 @@ void  INTERRUPT_Initialize (void)
     IPR0bits.IOCIP = 1;
     IPR3bits.TMR2IP = 1;
     IPR5bits.TU16AIP = 1;
+    IPR7bits.CLC3IP = 1;
     IPR10bits.TU16BIP = 1;
 
     // Clear the interrupt flag

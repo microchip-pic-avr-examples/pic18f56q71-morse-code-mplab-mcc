@@ -69,12 +69,18 @@ void UTMRB_callback(void)
     }
     else if (TU16B_HasPRMatchOccured())
     {
+        TU16B_Stop();
         printUTMRB = PR_MATCH_UTMR;
     }
     else if (TU16B_HasResetOccured())
     {
         printUTMRB = RESET_UTMR;
     }
+}
+
+void onMorseStart(void)
+{
+    TU16B_Start();
 }
 
 //#define USER_INPUT
@@ -86,6 +92,8 @@ int main(void)
     //Configure callback to run morse code state machine
     Timer2_OverflowCallbackRegister(&morseStateMachine);
    
+    CLC3_CLCI_SetInterruptHandler(&onMorseStart);
+    
     //Init the Morse Code Functions
     morseInit();
 
@@ -101,6 +109,10 @@ int main(void)
         
     TU16A_Start();
     TU16B_Start();
+    
+    //TU16B - Test Output
+    //PORT B or D
+    RB3PPS = 0x24;
     
 #ifdef USER_INPUT
     SELECT_USER_DECODE();
@@ -123,9 +135,7 @@ int main(void)
             {
                 case CAPTURE_UTMR:
                 {
-                    TU16BCON1bits.CLR = 1;
                     printf("Capture Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
-                    TU16B_Start();
                     break;
                 }
                 case PR_MATCH_UTMR:
@@ -155,8 +165,6 @@ int main(void)
                 case PR_MATCH_UTMR:
                 {
                     printf("PR Match Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
-                    printf("PR = 0x%x\r\n", TU16BPR);
-                    TU16B_Stop();
                     break;
                 }
                 case RESET_UTMR:
