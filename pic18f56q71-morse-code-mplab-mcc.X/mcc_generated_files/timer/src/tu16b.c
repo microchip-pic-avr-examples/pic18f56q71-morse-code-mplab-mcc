@@ -60,14 +60,14 @@ void TU16B_Initialize(void)
     TU16BERS = 0x10;
     //PS 0;  
     TU16BPS = 0x0;
-    //PRH 3; 
-    TU16BPRH = 0x3;
-    //PRL 232; 
-    TU16BPRL = 0xE8;
-    //TMRH 3; 
-    TU16BTMRH = 0x3;
-    //TMRL 232; 
-    TU16BTMRL = 0xE8;
+    //PRH 5; 
+    TU16BPRH = 0x5;
+    //PRL 220; 
+    TU16BPRL = 0xDC;
+    //TMRH 5; 
+    TU16BTMRH = 0x5;
+    //TMRL 220; 
+    TU16BTMRL = 0xDC;
 
     // Clearing IF flag before enabling the interrupt.
     TU16BCON1bits.PRIF = 0;

@@ -36,7 +36,7 @@
 
 #include "morseLookup.h"
 
-#define USER_INPUT
+//#define USER_INPUT
 
 int main(void)
 {
@@ -61,6 +61,7 @@ int main(void)
     // Enable the Global Low Interrupts 
     INTERRUPT_GlobalInterruptLowEnable(); 
         
+    //Start UTMRs
     TU16A_Start();
     TU16B_Start();
     
