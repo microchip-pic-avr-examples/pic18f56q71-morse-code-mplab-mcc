@@ -24,7 +24,21 @@ extern "C" {
 #define SELECT_TX_DECODE() do { RW0_SetLow(); } while(0)
 #define SELECT_USER_DECODE() do { RW0_SetHigh(); } while(0)
 
-#define MORSE_TIME_BASE 50
+//Units of ms
+#define MORSE_TIME_BASE 200
+    
+//Nominal - 2 units
+#define MORSE_DOT_MAX 2
+    
+//Nominal - 3 units
+#define MORSE_DASH_MIN 3
+#define MORSE_DASH_MAX 4
+
+//Nominal - 7 units
+#define MORSE_WORD_BREAK_MIN 5
+#define MORSE_WORD_BREAK_MAX 9
+    
+#define SPACE_CHAR_RX "/"
     
 //Depth of the character buffer
 #define CHAR_BUFFER_SIZE 128
@@ -42,13 +56,20 @@ extern "C" {
     
     typedef enum {
     MORSE_CHAR = 0, MORSE_BIT_BREAK, MORSE_CHAR_BREAK, MORSE_WORD_BREAK, MORSE_COMPLETE_WAIT, MORSE_COMPLETE
-    } MorseState;
+    } MorseStateTx;
+    
+    typedef enum {
+        MORSE_DOT_CHAR = 0, MORSE_DASH_CHAR, MORSE_BREAK_CHAR, MORSE_ERROR_CHAR
+    } MorseCharacter;
     
     //This function initializes the internal structures required for morse code
     void morseInit(void);
     
     //This function is called by the timer interrupt
-    void morseStateMachine(void);
+    void morseStateMachineTx(void);
+    
+    //This function is called by main to handle receive events
+    void morseStateMachineRx(void);
     
     //This function sets up required internal structures
     void morseSetup(char c);
@@ -56,8 +77,23 @@ extern "C" {
     //Ready a string for TX
     void morseLoadString(const char* str);
     
-    //Begin to transmit
+    //Begin transmission of data in buffer
     void morseStart(void);
+    
+    //Converts a 16-bit time into a dot, dash, break, or unknown / error character
+    MorseCharacter morseConvertToCharacter(uint16_t time);
+    
+    //Converts the dot-dash sequence received into a letter
+    char dotDashLookup(void);
+    
+    //ISR callback for TU16A
+    void morseCallback_TU16A(void);
+    
+    //ISR callback for TU16B
+    void morseCallback_TU16B(void);
+    
+    //ISR callback for CLC3 Rising Edge
+    void morseCallback_onStart(void);
 
 #ifdef	__cplusplus
 }

@@ -36,70 +36,24 @@
 
 #include "morseLookup.h"
 
-
-typedef enum 
-{
-    NO_EVENT_UTMR = 0, CAPTURE_UTMR, PR_MATCH_UTMR, RESET_UTMR
-} StateUTMR;
-
-static volatile StateUTMR printUTMRA = NO_EVENT_UTMR;
-static volatile StateUTMR printUTMRB = NO_EVENT_UTMR;
-
-void UTMRA_callback(void)
-{
-    if (TU16A_HasCaptureOccured())
-    {
-        printUTMRA = CAPTURE_UTMR;
-    }
-    else if (TU16A_HasPRMatchOccured())
-    {
-        printUTMRA = PR_MATCH_UTMR;
-    }
-    else if (TU16A_HasResetOccured())
-    {
-        printUTMRA = RESET_UTMR;
-    }
-}
-
-void UTMRB_callback(void)
-{
-    if (TU16B_HasCaptureOccured())
-    {
-        printUTMRB = CAPTURE_UTMR;
-    }
-    else if (TU16B_HasPRMatchOccured())
-    {
-        TU16B_Stop();
-        printUTMRB = PR_MATCH_UTMR;
-    }
-    else if (TU16B_HasResetOccured())
-    {
-        printUTMRB = RESET_UTMR;
-    }
-}
-
-void onMorseStart(void)
-{
-    TU16B_Start();
-}
-
-//#define USER_INPUT
+#define USER_INPUT
 
 int main(void)
 {
     SYSTEM_Initialize();
     
     //Configure callback to run morse code state machine
-    Timer2_OverflowCallbackRegister(&morseStateMachine);
+    Timer2_OverflowCallbackRegister(&morseStateMachineTx);
    
-    CLC3_CLCI_SetInterruptHandler(&onMorseStart);
+    //Setup Callback for CLC3 - Rising Edge (Start of Morse Code)
+    CLC3_CLCI_SetInterruptHandler(&morseCallback_onStart);
     
     //Init the Morse Code Functions
     morseInit();
 
     //Setup UTMR
-    TU16A_InterruptHandlerSet(&UTMRA_callback);
-    TU16B_InterruptHandlerSet(&UTMRB_callback);
+    TU16A_InterruptHandlerSet(&morseCallback_TU16A);
+    TU16B_InterruptHandlerSet(&morseCallback_TU16B);
     
     // Enable the Global High Interrupts 
     INTERRUPT_GlobalInterruptHighEnable(); 
@@ -109,10 +63,6 @@ int main(void)
         
     TU16A_Start();
     TU16B_Start();
-    
-    //TU16B - Test Output
-    //PORT B or D
-    RB3PPS = 0x24;
     
 #ifdef USER_INPUT
     SELECT_USER_DECODE();
@@ -128,54 +78,6 @@ int main(void)
     
     while(1)
     {
-        if (printUTMRA != NO_EVENT_UTMR)
-        {
-            printf("UTMR A - ");
-            switch(printUTMRA)
-            {
-                case CAPTURE_UTMR:
-                {
-                    printf("Capture Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
-                    break;
-                }
-                case PR_MATCH_UTMR:
-                {
-                    printf("PR Match Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
-                    break;
-                }
-                case RESET_UTMR:
-                {
-                    printf("Reset Event\r\nCapture = %u\r\n", TU16A_CaptureValueRead());
-                    break;
-                }
-
-            }
-            printUTMRA = NO_EVENT_UTMR;
-        }
-        if (printUTMRB != NO_EVENT_UTMR)
-        {
-            printf("UTMR B - ");
-            switch(printUTMRB)
-            {
-                case CAPTURE_UTMR:
-                {
-                    printf("Capture Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
-                    break;
-                }
-                case PR_MATCH_UTMR:
-                {
-                    printf("PR Match Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
-                    break;
-                }
-                case RESET_UTMR:
-                {
-                    printf("Reset Event\r\nCapture = %u\r\n", TU16B_CaptureValueRead());
-                    break;
-                }
-
-            }
-            printUTMRB = NO_EVENT_UTMR;
-        }
-
+        morseStateMachineRx();
     }    
 }
