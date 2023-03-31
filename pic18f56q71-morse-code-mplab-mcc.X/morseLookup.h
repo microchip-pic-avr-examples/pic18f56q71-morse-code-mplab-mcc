@@ -42,10 +42,14 @@ extern "C" {
 #define MORSE_RX_TIMEOUT 1500
     
 //This string is used where word breaks occur
-#define SPACE_CHAR_RX "//"
+#define SPACE_CHAR_RX "/"
     
 //Depth of the character buffer
 #define CHAR_BUFFER_SIZE 128
+    
+//If set, vertical lines '|' will separate characters in morse code
+//E.g.: ...---... will be shown as ...|---|...
+#define SHOW_LETTER_BREAKS
     
     const static uint8_t morseLengthsAZ[] = {
         2, 4, 4, 3, 1, 
@@ -58,6 +62,11 @@ extern "C" {
     0b0110, 0b1011, 0b010, 0b000, 0b1, 0b100, 0b1000, 0b110, 0b1001, 0b1101,
     0b0011};
     
+    //Note: All have length = 5
+    const static uint8_t morseTable09[] = {
+        0b11111, 0b11110, 0b11100, 0b11000, 0b10000, 0b00000, 0b00001, 0b00011, 0b00111, 0b01111
+    };
+    
     typedef enum {
     MORSE_CHAR = 0, MORSE_BIT_BREAK, MORSE_CHAR_BREAK, MORSE_WORD_BREAK, MORSE_COMPLETE_WAIT, MORSE_COMPLETE
     } MorseStateTx;
@@ -65,10 +74,7 @@ extern "C" {
     typedef enum {
         MORSE_DOT_CHAR = 0, MORSE_DASH_CHAR, MORSE_BREAK_CHAR, MORSE_ERROR_CHAR
     } MorseCharacter;
-    
-//If set, vertical lines will separate individual characters
-//#define SHOW_LETTER_BREAKS
-    
+        
     //This function initializes the internal structures required for morse code
     void morseInit(void);
     

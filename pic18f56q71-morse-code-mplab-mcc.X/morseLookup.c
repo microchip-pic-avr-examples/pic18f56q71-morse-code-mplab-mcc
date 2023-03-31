@@ -7,7 +7,7 @@
 #include "ringBuffer.h"
 
 //Timebase for Morse Code
-#define BASE_TIME_TX (MORSE_TIME_BASE / 10)
+#define BASE_TIME_TX (MORSE_TIME_BASE / 20)
 
 //Dots and Dashes
 #define DOT BASE_TIME_TX
@@ -72,10 +72,23 @@ void morseSetup(char c)
     {
         //Uppercase
         index = c - 'A';
+        currentC = morseTableAZ[index];
+        charBitsRemaining = morseLengthsAZ[index];
     }
     else if ((c >= 'a') && (c <= 'z'))
     {
+        //Lowercase
         index = c - 'a';
+        currentC = morseTableAZ[index];
+        charBitsRemaining = morseLengthsAZ[index];
+    }
+    else if ((c >= '0') && (c <= '9'))
+    {
+        //0 - 9
+        //Note: All numbers are length 5
+        
+        currentC = morseTable09[c - '0'];
+        charBitsRemaining = 5;
     }
     else
     {
@@ -85,9 +98,6 @@ void morseSetup(char c)
         return;
     }
 
-    currentC = morseTableAZ[index];
-    charBitsRemaining = morseLengthsAZ[index];
-    
     if (txState == MORSE_WORD_BREAK)
     {
         txState = MORSE_CHAR;
@@ -259,35 +269,61 @@ void dotDashLookup(void)
         return;
     }
         
-    
     char c = '?';
     
     //A - Z search
     uint8_t index = 0;
-    bool good = true;
+    bool contSearch = true;
     
-    while (good)
+    if (rxBitsCaptured == 5)
     {
-        if (morseLengthsAZ[index] == rxBitsCaptured)
+        //Number
+        while (contSearch)
         {
-            //Possible match - same length
-            if (morseTableAZ[index] == bufferRx)
+            if (morseTable09[index] == bufferRx)
             {
                 //Match!
-                c = index + 'a';
-                good = false;
+                c = index + '0';
+                contSearch = false;
+            }
+
+            //Increment Index
+            index++;
+
+            //If at end of numbers
+            if (index == 10)
+            {
+                contSearch = false;
             }
         }
-        
-        //Increment Index
-        index++;
-        
-        //If at end of alphabet
-        if (index == 26)
+    }
+    else
+    {
+        //Letter
+        while (contSearch)
         {
-            good = false;
+            if (morseLengthsAZ[index] == rxBitsCaptured)
+            {
+                //Possible match - same length
+                if (morseTableAZ[index] == bufferRx)
+                {
+                    //Match!
+                    c = index + 'a';
+                    contSearch = false;
+                }
+            }
+
+            //Increment Index
+            index++;
+
+            //If at end of alphabet
+            if (index == 26)
+            {
+                contSearch = false;
+            }
         }
     }
+    
     
     //If still not matched, check 0-9
     if (c == '?')

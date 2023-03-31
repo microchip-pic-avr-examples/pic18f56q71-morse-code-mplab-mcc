@@ -76,8 +76,8 @@ void Timer2_Initialize(void){
      PIR3bits.TMR2IF = 0;
     // Enabling TMR2 interrupt.
      PIE3bits.TMR2IE = 1;
-    // TCKPS 1:1; TMRON off; TOUTPS 1:1; 
-    T2CON = 0x0;
+    // TCKPS 1:2; TMRON off; TOUTPS 1:1; 
+    T2CON = 0x10;
 }
 
 void Timer2_ModeSet(Timer2_HLT_MODE mode)
