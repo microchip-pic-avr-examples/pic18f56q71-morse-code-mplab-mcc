@@ -34,22 +34,26 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "morseLookup.h"
+#include "morseCommon.h"
+#include "morseTx.h"
+#include "morseRx.h"
 
-//#define USER_INPUT
+//#define USER_INPUT_DECODE
+//#define PRINT_ON_STARTUP
 
 int main(void)
 {
     SYSTEM_Initialize();
     
     //Configure callback to run morse code state machine
-    Timer2_OverflowCallbackRegister(&morseStateMachineTx);
+    Timer2_OverflowCallbackRegister(&morseTx_stateMachine);
    
     //Setup Callback for CLC3 - Rising Edge (Start of Morse Code)
     CLC3_CLCI_SetInterruptHandler(&morseCallback_onStart);
     
     //Init the Morse Code Functions
-    morseInit();
+    morseRx_init();
+    morseTx_init();
 
     //Setup UTMR
     TU16A_InterruptHandlerSet(&morseCallback_TU16A);
@@ -65,20 +69,21 @@ int main(void)
     TU16A_Start();
     TU16B_Start();
     
-#ifdef USER_INPUT
+#ifdef USER_INPUT_DECODE
     SELECT_USER_DECODE();
 #else
     SELECT_TX_DECODE();
 #endif
     
-    //Define INIT_TEST to print "Hello World" on startup
-#ifdef INIT_TEST    
-    morseLoadString("hello world");
-    morseStart();
+    //Define PRINT_ON_STARTUP to print "Hello World" on boot
+#ifdef PRINT_ON_STARTUP    
+    morseTx_queueString("hello world");
+    morseTx_startTransmit();
 #endif
     
     while(1)
     {
+        //Morse Decoder State Machine
         morseStateMachineRx();
     }    
 }

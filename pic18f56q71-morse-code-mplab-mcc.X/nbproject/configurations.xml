@@ -42,8 +42,10 @@
           <itemPath>mcc_generated_files/vport/portw.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>morseLookup.h</itemPath>
       <itemPath>ringBuffer.h</itemPath>
+      <itemPath>morseTx.h</itemPath>
+      <itemPath>morseRx.h</itemPath>
+      <itemPath>morseCommon.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -103,7 +105,8 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>ringBuffer.c</itemPath>
-      <itemPath>morseLookup.c</itemPath>
+      <itemPath>morseTx.c</itemPath>
+      <itemPath>morseRx.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -367,7 +370,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.16.368"/>
+        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.17.379"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -553,6 +556,8 @@
         <property key="communication.interface"
                   value="${communication.interface.default}"/>
         <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.debug-startup" value="Use system settings"/>
+        <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
