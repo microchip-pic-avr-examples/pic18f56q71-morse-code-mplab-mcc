@@ -38,7 +38,7 @@
 #include "morseTx.h"
 #include "morseRx.h"
 
-#define USER_INPUT_DECODE
+//#define USER_INPUT_DECODE
 //#define PRINT_ON_STARTUP
 
 int main(void)
