@@ -1,13 +1,13 @@
 /**
- * CLC6 Generated Driver API Header File.
+ * CLC4 Generated Driver API Header File.
  * 
- * @file clc6.h
+ * @file clc4.h
  * 
- * @defgroup  clc6 CLC6
+ * @defgroup  clc4 CLC4
  * 
- * @brief This file contains the API prototypes for the CLC6 driver.
+ * @brief This file contains the API prototypes for the CLC4 driver.
  *
- * @version CLC6 Driver Version 1.0.1
+ * @version CLC4 Driver Version 1.0.1
 */
 /*
 © [2023] Microchip Technology Inc. and its subsidiaries.
@@ -30,33 +30,33 @@
     THIS SOFTWARE.
 */
 
-#ifndef CLC6_H
- #define CLC6_H
+#ifndef CLC4_H
+ #define CLC4_H
 
 #include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 /**
- * @ingroup clc6
- * @brief  Initializes the CLC6. This routine configures the CLC6 specific control registers.
+ * @ingroup clc4
+ * @brief  Initializes the CLC4. This routine configures the CLC4 specific control registers.
  * @param None.
  * @return None.
  * 
  */
-void CLC6_Initialize(void);
+void CLC4_Initialize(void);
 
 
 /**
- * @ingroup clc6
+ * @ingroup clc4
  * @brief Returns the output pin status of the CLC module.
  * @param  None.
  * @retval True - Output is 1.
  * @retval False - Output is 0.
  */
-bool CLC6_OutputStatusGet(void);
+bool CLC4_OutputStatusGet(void);
 
-#endif  // CLC6_H
+#endif  // CLC4_H
 /**
  End of File
 */

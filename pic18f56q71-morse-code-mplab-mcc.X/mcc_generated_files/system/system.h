@@ -42,7 +42,7 @@
 #include "../clc/clc1.h"
 #include "../clc/clc2.h"
 #include "../clc/clc3.h"
-#include "../clc/clc6.h"
+#include "../clc/clc4.h"
 #include "../clkref/clkref.h"
 #include "../nco/nco1.h"
 #include "../vport/portw.h"

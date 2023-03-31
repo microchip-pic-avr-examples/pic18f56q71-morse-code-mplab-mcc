@@ -42,14 +42,14 @@ void CLC2_Initialize(void)
     CLCSELECT = 0x1;
     // LCG1POL not_inverted; LCG2POL inverted; LCG3POL not_inverted; LCG4POL not_inverted; LCPOL inverted; 
     CLCnPOL = 0x82;
-    // LCD1S CLCIN0 (CLCIN0PPS); 
-    CLCnSEL0 = 0x0;
+    // LCD1S CLC4; 
+    CLCnSEL0 = 0x28;
     // LCD2S TMR4; 
     CLCnSEL1 = 0x16;
     // LCD3S CLC1; 
     CLCnSEL2 = 0x25;
-    // LCD4S CLCIN0 (CLCIN0PPS); 
-    CLCnSEL3 = 0x0;
+    // LCD4S CLC4; 
+    CLCnSEL3 = 0x28;
     // LCG1D1N disabled; LCG1D1T disabled; LCG1D2N disabled; LCG1D2T enabled; LCG1D3N disabled; LCG1D3T disabled; LCG1D4N disabled; LCG1D4T disabled; 
     CLCnGLS0 = 0x8;
     // LCG2D1N enabled; LCG2D1T disabled; LCG2D2N disabled; LCG2D2T disabled; LCG2D3N enabled; LCG2D3T disabled; LCG2D4N disabled; LCG2D4T disabled; 

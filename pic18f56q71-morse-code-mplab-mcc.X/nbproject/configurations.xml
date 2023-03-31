@@ -11,7 +11,7 @@
           <itemPath>mcc_generated_files/clc/clc1.h</itemPath>
           <itemPath>mcc_generated_files/clc/clc2.h</itemPath>
           <itemPath>mcc_generated_files/clc/clc3.h</itemPath>
-          <itemPath>mcc_generated_files/clc/clc6.h</itemPath>
+          <itemPath>mcc_generated_files/clc/clc4.h</itemPath>
         </logicalFolder>
         <logicalFolder name="clkref" displayName="clkref" projectFiles="true">
           <itemPath>mcc_generated_files/clkref/clkref.h</itemPath>
@@ -62,7 +62,7 @@
             <itemPath>mcc_generated_files/clc/src/clc1.c</itemPath>
             <itemPath>mcc_generated_files/clc/src/clc2.c</itemPath>
             <itemPath>mcc_generated_files/clc/src/clc3.c</itemPath>
-            <itemPath>mcc_generated_files/clc/src/clc6.c</itemPath>
+            <itemPath>mcc_generated_files/clc/src/clc4.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="clkref" displayName="clkref" projectFiles="true">
