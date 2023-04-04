@@ -205,8 +205,16 @@ void morseTx_startTransmit(void)
 {
     if ((!ringBuffer_isEmpty(&rBuffer)) && (txState == MORSE_COMPLETE))
     {
+#ifdef ENABLE_START_TX
+        //Transmit START Sequence (0b10101)
+        currentC = MORSE_START_CHAR;
+        charBitsRemaining = 5;
+        txState = MORSE_CHAR;
+        morseTx_stateMachine();
+#else
         morseTx_setupTransmitter(ringBuffer_getChar(&rBuffer));
         morseTx_stateMachine();
+#endif
     }
 }
 

@@ -12,6 +12,10 @@ extern "C" {
     
 //Depth of the character buffers
 #define CHAR_BUFFER_SIZE 128
+    
+//If set, the START character is transmitted before the message    
+//#define ENABLE_START_TX
+#define MORSE_START_CHAR 0b10101
         
     const static uint8_t morseLengthsAZ[] = {
         2, 4, 4, 3, 1, 

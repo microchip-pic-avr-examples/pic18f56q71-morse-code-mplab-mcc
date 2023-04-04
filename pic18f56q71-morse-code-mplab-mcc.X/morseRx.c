@@ -86,7 +86,20 @@ void dotDashLookup(void)
     
     if (rxBitsCaptured == 5)
     {
-        //Number
+        //Number or Start
+        
+        if (bufferRx == MORSE_START_CHAR)
+        {
+            //This is "START" transmission
+            ringBuffer_loadString(&tBuffer, "<START>");
+            
+            //Reset counters
+            rxBitsCaptured = 0;
+            bufferRx = 0;
+
+            return;
+        }
+        
         while (contSearch)
         {
             if (morseTable09[index] == bufferRx)
@@ -105,6 +118,7 @@ void dotDashLookup(void)
                 contSearch = false;
             }
         }
+        
     }
     else
     {
@@ -117,7 +131,7 @@ void dotDashLookup(void)
                 if (morseTableAZ[index] == bufferRx)
                 {
                     //Match!
-                    c = index + 'a';
+                    c = index + 'A';
                     contSearch = false;
                 }
             }
@@ -311,7 +325,7 @@ void morseStateMachineRx(void)
             //Last lookup
             dotDashLookup();
             
-            printf("\r\n");
+            printf("\r\n> ");
             printReceivedString();
             
             //Update state machine
