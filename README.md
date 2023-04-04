@@ -25,9 +25,25 @@ Morse code is a type of Frequency-Shift Key (FSK) communication. Using the on-ch
 
 This demo is fully self-contained on the Curiosity Nano. However, an external button or telegraph key can be connected to RA1, if desired.
 
+### I/O Usage
+
+| I/O Pin | Function
+| ------- | --------
+| RA0 | SW0 Input
+| RA1 | External User Input
+| RB4 | UART TX
+| RB5 | UART RX
+| RC7 | LED0 Output  
+
 ### UART Setup
 
-//To be added
+UART Settings:  
+- Baud Rate: 9600
+- Character Length: 8 bits
+- Parity: None
+- Stop Bits: 1 bit
+
+
 
 ## Theory of Operation
 
@@ -90,28 +106,35 @@ When the morse code is complete, UTMR B will timeout and generate a PR Match int
 
 It's possible for errors to occur in transmission. The most noteable is a timeout for the positive width measurement (UTMR A). If this occurs, the state machine moves to an error state. The negative edge measurement, when it occurs, will be discarded. 
 
-## Transmitting a Message
-To transmit Morse code, type a message in the Serial Terminal, then press Enter. The message will not be sent until the microcontroller receives the '\n' character from the serial terminal.
+## Output and Operation
 
-## Receiving and Decoding a Message
+![Morse Code Demo](./images/morseDemo.gif)  
+
+### Transmitting a Message
+To transmit morse code, type a message in the Serial Terminal, then press Enter. The message will not be sent until the microcontroller receives the '\n' character from the serial terminal. LED0 on the Curiosity Nano will blink as an output. If the receiver is connected to the transmitter, the output will also appear on the UART terminal.  
+
+*Note: Only characters A-Z and 0-9 are supported.*
+
+### Receiving and Decoding a Message
 The receiver and decoder half of the program has 2 possible inputs - an internal input, where the microcontroller decodes the same data that it transmits, or a user input, where either the pushbutton on the Curiosity Nano or an (*optional*) externally connected button / telegraph key can be used to send data.
 
 **By default, the program uses internal input.**
 
+#### UART Morse Output
+
 ![Morse Code Output](./images/morseOutput.PNG)  
 
-### UART Morse Output
-
+Output Characters  
 '.' - Dot  
 '-' - Dash  
 '|' - Letter Break  
 '/' - Word Break (Default)
 
-### Operation (Internal Input)
+#### Operation (Internal Input)
 
 Receiving and decoding is handled automatically by transmitting a message. 
 
-### Operation (User Input)
+#### Operation (User Input)
 
 *Note: The morse code decoder requires specific timings for proper operation. There is margin programmed in to make it easier, but it is still difficult to maintain the correct timing pattern.*
 
@@ -127,11 +150,11 @@ When the button is released, the length of the release time also plays a role in
 - Character Break (3 units)
 - Word Break (7 units)
 
-You can find a copy of the morse Code alphabet and specification [here](https://www.itu.int/dms_pubrec/itu-r/rec/m/R-REC-M.1677-1-200910-I!!PDF-E.pdf).
+You can find a copy of the morse Code alphabet and specification [here](https://www.itu.int/rec/R-REC-M.1677-1-200910-I/en).
 
 ## Program Options
 
-### Modify Timebase
+### Edit Timebase
 The timebase the morse code transmitter and decoder runs at (`MORSE_TIME_BASE`) can be adjusted in `morseCommon.h`. The valid timebase range is between 20 ms and 728 ms. 
 
 ### Disable Letter Breaks
