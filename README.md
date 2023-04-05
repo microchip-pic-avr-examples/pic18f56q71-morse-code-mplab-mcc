@@ -159,6 +159,8 @@ If `PRINT_ON_STARTUP` in `main.c` is defined, a message such as "hello world" be
 ### Edit Timebase
 The timebase the morse code transmitter and decoder runs at (`MORSE_TIME_BASE`) can be adjusted in `morseCommon.h`. The valid timebase range is between 40 ms and 1400 ms. 
 
+*Note: To ensure correct operation with internal transmitter, timebase should be a multiple of 40.*  
+
 ### Disable Letter Breaks
 If `SHOW_LETTER_BREAKS` is commented out in `morseRx.h`, then letter breaks will not be shown in the morse code output.
 
