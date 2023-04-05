@@ -53,7 +53,7 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xEF;
     TRISC = 0x7F;
-    TRISD = 0x7F;
+    TRISD = 0xFF;
     TRISE = 0xF;
     TRISF = 0xFF;
 
@@ -123,7 +123,6 @@ void PIN_MANAGER_Initialize(void)
     CLCIN1PPS = 0x39; //RW1->CLC3:CLCIN1;
     CLCIN2PPS = 0x38; //RW0->CLC3:CLCIN2;
     RB4PPS = 0x18;  //RB4->UART2:TX2;
-    RD7PPS = 0x03;  //RD7->CLC3:CLC3;
 
    /**
     IOCx registers 

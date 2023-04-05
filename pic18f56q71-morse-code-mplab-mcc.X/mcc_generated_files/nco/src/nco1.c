@@ -47,10 +47,10 @@ void NCO1_Initialize(void){
     NCO1ACCL = 0x0;
     //NCOINC 0; 
     NCO1INCU = 0x0;
-    //NCOINC 26; 
-    NCO1INCH = 0x1A;
-    //NCOINC 109; 
-    NCO1INCL = 0x6D;
+    //NCOINC 6; 
+    NCO1INCH = 0x6;
+    //NCOINC 155; 
+    NCO1INCL = 0x9B;
     //NEN enabled; NPOL active_hi; NPFM FDC_mode; 
     NCO1CON = 0x80;
 }

@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 //Timebase for Morse Code
-#define BASE_TIME_TX (MORSE_TIME_BASE / 20)
+#define BASE_TIME_TX (MORSE_TIME_BASE / 40)
 
 //Dots and Dashes
 #define DOT BASE_TIME_TX
@@ -185,6 +185,8 @@ void morseTx_stateMachine(void)
         case MORSE_COMPLETE:
         {
             //Done with TX
+            //Exit Function
+            
             MORSE_OFF();
             return;
         }
@@ -213,8 +215,11 @@ void morseTx_startTransmit(void)
         morseTx_stateMachine();
 #else
         morseTx_setupTransmitter(ringBuffer_getChar(&rBuffer));
-        morseTx_stateMachine();
-#endif
+#endif        
+        
+        //Note - call state machine from ISR to sync timings
+        Timer2_PeriodCountSet(1);
+        Timer2_Start();
     }
 }
 

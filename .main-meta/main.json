@@ -4,8 +4,8 @@
     "content": {
         "metaDataVersion": "1.3.0",
         "name": "com.microchip.mcu8.mplabx.project.pic18f56q71-morse-code-mplab-mcc",
-        "version": " ",
-        "displayName": "",
+        "version": "1.0.0",
+        "displayName": "Morse Code Transmitter and Receiver with PIC18F56Q71",
         "projectName": "pic18f56q71-morse-code-mplab-mcc",
         "shortDescription": "Transmit and receive morse code with the PIC18F56Q71 microcontroller",
         "ide": {
@@ -19,12 +19,12 @@
             }
         ],
         "dfp": {
-            "name": "",
-            "semverRange": ""
+            "name": "PIC18F-Q_DFP",
+            "semverRange": "^1.17.379"
         },
         "configurator": {
-            "name": "",
-            "semverRange": ""
+            "name": "MCC",
+            "semverRange": ">=5.3.0"
         },
         "device": {
             "metaDataVersion": "1.0.0",
@@ -37,8 +37,12 @@
             }
         },
         "author": "Robert Perkel",
-        "peripherals": [],
-        "keywords": [],
+        "peripherals": [
+            "UTMR", "TMR2", "TMR4", "CLC", "NCO", "UART"
+        ],
+        "keywords": [
+            "CIP", "Curiosity Nano"
+        ],
         "additionalData": {
             "longDescription": {
                 "metaDataVersion": "1.0.0",
