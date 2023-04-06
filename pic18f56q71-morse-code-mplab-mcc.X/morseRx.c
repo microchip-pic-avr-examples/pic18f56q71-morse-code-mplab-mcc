@@ -29,8 +29,117 @@ void morseRx_init(void)
     TU16B_PeriodValueSet(MORSE_RX_TIMEOUT);
 }
 
+//This function is called by main to handle receive events
+void morseRx_stateMachine(void)
+{
+    switch (rxState)
+    {
+        case MORSE_RX_POS:
+        {
+            //Valid positive width
+            
+            MorseCharacter pos = morseRx_convertToMorseCharacter(TU16A_CaptureValueRead());
+            
+            if (pos == MORSE_DOT_CHAR)
+            {
+                printf(".");
+                rxBitsCaptured++;
+                //Note - shifts in 0, so no OR needed
+            }
+            else if (pos == MORSE_DASH_CHAR)
+            {
+                printf("-");
+                bufferRx |= (0b1 << rxBitsCaptured);
+                rxBitsCaptured++;
+            }
+            
+            rxState = MORSE_RX_POS_DONE;
+            
+            break;
+        }
+        case MORSE_RX_POS_TO:
+        {
+            //Positive width timeout (TO)
+            
+            //Wait for timer to stop (done by ISR)
+            while (TU16A_IsTimerRunning());
+            
+            //Restart!
+            TU16A_Start();
+            
+            //Update state
+            rxState = MORSE_RX_POS_DONE;
+            
+            break;
+        }
+        case MORSE_RX_POS_DONE:
+        {
+            //Positive done - waiting for negative
+            break;
+        }
+        case MORSE_RX_NEG:
+        {
+            //Valid negative width
+            //Transmission still on-going
+            
+            MorseCharacter neg;
+            neg = morseRx_convertToMorseCharacter(TU16B_CaptureValueRead());
+            
+            if (neg == MORSE_DASH_CHAR)
+            {
+                //End of character
+                morseRx_characterLookup();
+#ifdef SHOW_LETTER_BREAKS
+                printf("|");
+#endif
+            }
+            else if (neg == MORSE_BREAK_CHAR)
+            {
+                //Word break
+                
+                morseRx_characterLookup();
+                ringBuffer_loadCharacter(&tBuffer, ' ');
+                printf(SPACE_CHAR_RX);
+            }
+            
+            //Update state machine
+            rxState = MORSE_RX_IP;
+            
+            break;
+        }
+        case MORSE_RX_NEG_TO:
+        {
+            //Negative width timeout (TO)
+            //End of transmission
+            
+            //Last lookup
+            morseRx_characterLookup();
+            
+            printf("\r\n> ");
+            morseRx_printReceivedString();
+            
+            //Update state machine
+            rxState = MORSE_RX_IDLE;
+            
+            break;
+        }
+        case MORSE_RX_IP:
+        case MORSE_RX_IDLE:
+        default:
+        {
+            
+        }
+    }
+}
+
+//Returns true if the receiver/decoder is idle
+bool morseRx_isIdle(void)
+{
+    return (rxState == MORSE_RX_IDLE);
+}
+
 //Converts a 16-bit time into a dot, dash, break, or unknown / error character
-MorseCharacter morseConvertToCharacter(uint16_t time)
+MorseCharacter morseRx_convertToMorseCharacter(uint16_t time)
 {
     MorseCharacter c = MORSE_ERROR_CHAR;
     
@@ -69,7 +178,7 @@ MorseCharacter morseConvertToCharacter(uint16_t time)
 }
 
 //Converts the dot-dash sequence received into a letter
-void dotDashLookup(void)
+void morseRx_characterLookup(void)
 {
     //No bits were captured!
     if (rxBitsCaptured == 0)
@@ -163,7 +272,7 @@ void dotDashLookup(void)
 }
 
 //Prints the string received
-void printReceivedString(void)
+void morseRx_printReceivedString(void)
 {
     while (!ringBuffer_isEmpty(&tBuffer))
     {
@@ -177,7 +286,7 @@ void printReceivedString(void)
 }
 
 //ISR callback for TU16A
-void morseCallback_TU16A(void)
+void morseRx_TU16A_Callback(void)
 {
     if (TU16A_HasCaptureOccured())
     {
@@ -196,7 +305,7 @@ void morseCallback_TU16A(void)
 }
     
 //ISR callback for TU16B
-void morseCallback_TU16B(void)
+void morseRx_TU16B_Callback(void)
 {
     if (TU16B_HasCaptureOccured())
     {
@@ -233,117 +342,8 @@ void morseCallback_TU16B(void)
 }
 
 //ISR callback for CLC3 Rising Edge
-void morseCallback_onStart(void)
+void morseRx_CLC3_onRisingEdge(void)
 {
     //Restart TU16B
     TU16B_Start();
-}
-
-//This function is called by main to handle receive events
-void morseStateMachineRx(void)
-{
-    switch (rxState)
-    {
-        case MORSE_RX_POS:
-        {
-            //Valid positive width
-            
-            MorseCharacter pos = morseConvertToCharacter(TU16A_CaptureValueRead());
-            
-            if (pos == MORSE_DOT_CHAR)
-            {
-                printf(".");
-                rxBitsCaptured++;
-                //Note - shifts in 0, so no OR needed
-            }
-            else if (pos == MORSE_DASH_CHAR)
-            {
-                printf("-");
-                bufferRx |= (0b1 << rxBitsCaptured);
-                rxBitsCaptured++;
-            }
-            
-            rxState = MORSE_RX_POS_DONE;
-            
-            break;
-        }
-        case MORSE_RX_POS_TO:
-        {
-            //Positive width timeout (TO)
-            
-            //Wait for timer to stop (done by ISR)
-            while (TU16A_IsTimerRunning());
-            
-            //Restart!
-            TU16A_Start();
-            
-            //Update state
-            rxState = MORSE_RX_POS_DONE;
-            
-            break;
-        }
-        case MORSE_RX_POS_DONE:
-        {
-            //Positive done - waiting for negative
-            break;
-        }
-        case MORSE_RX_NEG:
-        {
-            //Valid negative width
-            //Transmission still on-going
-            
-            MorseCharacter neg;
-            neg = morseConvertToCharacter(TU16B_CaptureValueRead());
-            
-            if (neg == MORSE_DASH_CHAR)
-            {
-                //End of character
-                dotDashLookup();
-#ifdef SHOW_LETTER_BREAKS
-                printf("|");
-#endif
-            }
-            else if (neg == MORSE_BREAK_CHAR)
-            {
-                //Word break
-                
-                dotDashLookup();
-                ringBuffer_loadCharacter(&tBuffer, ' ');
-                printf(SPACE_CHAR_RX);
-            }
-            
-            //Update state machine
-            rxState = MORSE_RX_IP;
-            
-            break;
-        }
-        case MORSE_RX_NEG_TO:
-        {
-            //Negative width timeout (TO)
-            //End of transmission
-            
-            //Last lookup
-            dotDashLookup();
-            
-            printf("\r\n> ");
-            printReceivedString();
-            
-            //Update state machine
-            rxState = MORSE_RX_IDLE;
-            
-            break;
-        }
-        case MORSE_RX_IP:
-        case MORSE_RX_IDLE:
-        default:
-        {
-            
-        }
-    }
-}
-
-//Returns true if the receiver/decoder is idle
-bool morseRx_isIdle(void)
-{
-    return (rxState == MORSE_RX_IDLE);
 }

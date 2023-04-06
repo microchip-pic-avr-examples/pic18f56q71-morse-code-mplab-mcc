@@ -128,8 +128,8 @@ Output Characters
 '.' - Dot  
 '-' - Dash  
 '|' - Letter Break  
-'/' - Word Break (Default)
-'?' - Unable to decode character (not shown)
+'/' - Word Break (default)  
+'?' - Unable to decode character  
 
 #### Operation (Internal Input)  
 Receiving and decoding is handled automatically by transmitting a message. 

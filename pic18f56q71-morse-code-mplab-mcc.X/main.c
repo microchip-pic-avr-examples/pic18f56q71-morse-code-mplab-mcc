@@ -49,15 +49,15 @@ int main(void)
     Timer2_OverflowCallbackRegister(&morseTx_stateMachine);
    
     //Setup Callback for CLC3 - Rising Edge (Start of Morse Code)
-    CLC3_CLCI_SetInterruptHandler(&morseCallback_onStart);
+    CLC3_CLCI_SetInterruptHandler(&morseRx_CLC3_onRisingEdge);
     
     //Init the Morse Code Functions
     morseRx_init();
     morseTx_init();
 
     //Setup UTMR
-    TU16A_InterruptHandlerSet(&morseCallback_TU16A);
-    TU16B_InterruptHandlerSet(&morseCallback_TU16B);
+    TU16A_InterruptHandlerSet(&morseRx_TU16A_Callback);
+    TU16B_InterruptHandlerSet(&morseRx_TU16B_Callback);
     
     // Enable the Global High Interrupts 
     INTERRUPT_GlobalInterruptHighEnable(); 
@@ -84,7 +84,7 @@ int main(void)
     while(1)
     {
         //Morse Decoder State Machine
-        morseStateMachineRx();
+        morseRx_stateMachine();
         
         if (morseTx_isSwitchRequested() && morseRx_isIdle() && morseTx_isIdle())
         {

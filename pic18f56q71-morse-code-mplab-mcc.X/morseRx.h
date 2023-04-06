@@ -37,28 +37,28 @@ extern "C" {
     void morseRx_init(void);
     
     //This function is called by main to handle receive events
-    void morseStateMachineRx(void);
+    void morseRx_stateMachine(void);
     
     //Returns true if the receiver/decoder is idle
     bool morseRx_isIdle(void);
     
     //Converts a 16-bit time into a dot, dash, break, or unknown / error character
-    MorseCharacter morseConvertToCharacter(uint16_t time);
+    MorseCharacter morseRx_convertToMorseCharacter(uint16_t time);
     
     //Converts the dot-dash sequence received into a letter
-    void dotDashLookup(void);
+    void morseRx_characterLookup(void);
     
     //Prints the string received
-    void printReceivedString(void);
+    void morseRx_printReceivedString(void);
     
     //ISR callback for TU16A
-    void morseCallback_TU16A(void);
+    void morseRx_TU16A_Callback(void);
     
     //ISR callback for TU16B
-    void morseCallback_TU16B(void);
+    void morseRx_TU16B_Callback(void);
     
     //ISR callback for CLC3 Rising Edge
-    void morseCallback_onStart(void);
+    void morseRx_CLC3_onRisingEdge(void);
 
 #ifdef	__cplusplus
 }
