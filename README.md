@@ -109,11 +109,9 @@ During receive, if the timeout for the positive width measurement (UTMR A) is tr
 ![Morse Code Demo](./images/morseDemo.gif)  
 
 ### Transmitting a Message
-To transmit Morse code, type a message in the serial terminal, then press Enter. The message will not be sent until the microcontroller receives the '\n' character from the serial terminal. The transmitter output is LED0 on the Curiosity Nano. If the receiver is connected to the transmitter, then the output will also appear on the UART terminal.  
+To transmit Morse code, type a message in the serial terminal, then press Enter. The message will not be sent until the microcontroller receives the '\n' character from the serial terminal. The transmitter output is LED0 on the Curiosity Nano. If the receiver is connected to the transmitter, then the output will also appear on the UART terminal. You can switch between user input and the internal transmitter by sending the '#' character when both transmitter and receiver are idle.  
 
 **Note: Only characters A-Z and 0-9 are supported.**  
-
-You can switch between user input and the transmitter by sending the '#' character when both are idle.  
 
 ### Receiving and Decoding a Message
 The receiver and decoder in this example have two possible inputs - an internal input, where the microcontroller decodes the same data that it transmits, or a user input, where either the pushbutton on the Curiosity Nano or an external button / telegraph key can be used to send data.
