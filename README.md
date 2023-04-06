@@ -53,7 +53,7 @@ In addition, the Configurable Logic Cells (CLCs) are used to implement a dual in
 
 ### Transmitter
 
-Text to be transmitted is sent by UART to the microcontroller. When each character is received, the application loads it into a ring buffer. If the character '\n' is received, the transmission sequence begins. 
+Text to be transmitted is sent by UART to the microcontroller. When each character is received, the application loads it into a ring buffer. Wehn the character '\n' is received, the transmission sequence begins. 
 
 In Morse code, dot and dash are differentiated by the length of their on time. After transmitting the dot or dash, the transmitter must remain off for a certain period of time. The length of the off time depends on whether this is a:
 
@@ -67,9 +67,9 @@ For both simplicity and efficency, the state machine for the transmitter only is
 
 ### Dual Input Debouncer
 
-This demo allows users to either use the button on the Curiosity Nano (SW0) or to connect up their own button or input source. To support this operating mode, both inputs are connected via NAND (in CLC4) to make a single output for the input debouncer.
+This demo allows users to either use the button on the Curiosity Nano (SW0) or to connect their own button or input source. To implement this functionality, both inputs are connected via a NAND (in CLC4) to make a single output for the input debouncer.
 
-The input debouncer is the 2 CLC configuration discussed in [this example](https://github.com/microchip-pic-avr-examples/pic18f16q40-clc-switch-debouncing).
+The input debouncer utilized in this example is the 2 CLC configuration discussed in [Switch Debouncing with the PIC18F16Q40](https://github.com/microchip-pic-avr-examples/pic18f16q40-clc-switch-debouncing).
 
 ### Receiver Multiplexer
 
