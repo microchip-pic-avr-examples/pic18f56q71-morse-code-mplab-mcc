@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include "./mcc_generated_files/system/system.h"
     
 //Time base for morse code (in ms)
 //Note: With internal transmitter, this must be a multiple of 40
@@ -18,6 +19,13 @@ extern "C" {
 //#define ENABLE_START_TX
 #define MORSE_START_CHAR 0b10101
         
+//Select input to decoder
+#define SELECT_TX_DECODE() do { RW0_SetLow(); } while(0)
+#define SELECT_USER_DECODE() do { RW0_SetHigh(); } while(0)
+#define SWITCH_DECODE_SOURCE() do { RW0_Toggle(); } while(0)
+    
+#define IS_USER_INPUT_ACTIVE() RW0_GetValue()
+    
     const uint8_t morseLengthsAZ[] = {
         2, 4, 4, 3, 1, 
         4, 3, 4, 2, 4, 3, 4, 2, 2, 3,

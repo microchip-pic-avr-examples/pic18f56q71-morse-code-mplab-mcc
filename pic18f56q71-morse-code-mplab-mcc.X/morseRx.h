@@ -1,13 +1,12 @@
 #ifndef MORSERX_H
 #define	MORSERX_H
 
+#include "mcc_generated_files/system/pins.h"
+
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-//Select input to decoder
-#define SELECT_TX_DECODE() do { RW0_SetLow(); } while(0)
-#define SELECT_USER_DECODE() do { RW0_SetHigh(); } while(0)
     
 //Nominal Dot - 1 unit
 #define MORSE_DOT_MAX 1
@@ -39,6 +38,9 @@ extern "C" {
     
     //This function is called by main to handle receive events
     void morseStateMachineRx(void);
+    
+    //Returns true if the receiver/decoder is idle
+    bool morseRx_isIdle(void);
     
     //Converts a 16-bit time into a dot, dash, break, or unknown / error character
     MorseCharacter morseConvertToCharacter(uint16_t time);

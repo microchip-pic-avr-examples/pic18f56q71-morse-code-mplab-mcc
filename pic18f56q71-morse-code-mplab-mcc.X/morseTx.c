@@ -1,7 +1,7 @@
+#include "mcc_generated_files/system/system.h"
 #include "morseTx.h"
 #include "morseCommon.h"
 
-#include "mcc_generated_files/system/system.h"
 #include "ringBuffer.h"
 
 #include <stdint.h>
@@ -30,6 +30,7 @@ typedef enum {
 static volatile MorseStateTx txState = MORSE_COMPLETE;
 static volatile uint8_t currentC = 0x00;
 static volatile uint8_t charBitsRemaining = 0;
+static volatile bool inputSwitched = false;
 
 static char cBufferRx[CHAR_BUFFER_SIZE];
 static RingBuffer rBuffer;
@@ -196,6 +197,24 @@ void morseTx_stateMachine(void)
     Timer2_Start();
 }
 
+//This function returns true if the user switched the input source
+bool morseTx_isSwitchRequested(void)
+{
+    return inputSwitched;
+}
+
+//Returns true if the transmitter is idle
+bool morseTx_isIdle(void)
+{
+    return (txState == MORSE_COMPLETE);
+}
+
+//Clear the RX source request flag
+void morseTx_clearSwitchRequest(void)
+{
+    inputSwitched = false;
+}
+
 //Ready a string for TX
 void morseTx_queueString(const char* str)
 {
@@ -231,6 +250,11 @@ void __interrupt(irq(U2RX),base(8)) UART2_RX_Interrupt(void)
         if ((c == '\n') || (c == '\r'))
         {
             morseTx_startTransmit();
+        }
+        else if (c == '#')
+        {
+            //Request Decode Source Change
+            inputSwitched = true;
         }
         else
         {

@@ -8,7 +8,7 @@
 #include "ringBuffer.h"
 
 typedef enum {
-    MORSE_RX_IDLE = 0, MORSE_RX_POS, MORSE_RX_POS_TO, MORSE_RX_POS_DONE, MORSE_RX_NEG, MORSE_RX_NEG_TO
+    MORSE_RX_IDLE = 0, MORSE_RX_IP, MORSE_RX_POS, MORSE_RX_POS_TO, MORSE_RX_POS_DONE, MORSE_RX_NEG, MORSE_RX_NEG_TO
 } MorseStateRx;
 
 static volatile uint8_t rxBitsCaptured = 0;
@@ -313,7 +313,7 @@ void morseStateMachineRx(void)
             }
             
             //Update state machine
-            rxState = MORSE_RX_IDLE;
+            rxState = MORSE_RX_IP;
             
             break;
         }
@@ -333,10 +333,17 @@ void morseStateMachineRx(void)
             
             break;
         }
+        case MORSE_RX_IP:
         case MORSE_RX_IDLE:
         default:
         {
             
         }
     }
+}
+
+//Returns true if the receiver/decoder is idle
+bool morseRx_isIdle(void)
+{
+    return (rxState == MORSE_RX_IDLE);
 }

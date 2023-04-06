@@ -18,6 +18,15 @@ extern "C" {
     //This function is called by the timer interrupt
     void morseTx_stateMachine(void);
     
+    //This function returns true if the user switched the input source
+    bool morseTx_isSwitchRequested(void);
+    
+    //Returns true if the transmitter is idle
+    bool morseTx_isIdle(void);
+    
+    //Clear the RX source request flag
+    void morseTx_clearSwitchRequest(void);
+    
     //This function sets up required internal structures
     void morseTx_setupTransmitter(char c);
     

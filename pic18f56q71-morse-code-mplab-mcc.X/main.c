@@ -85,5 +85,23 @@ int main(void)
     {
         //Morse Decoder State Machine
         morseStateMachineRx();
+        
+        if (morseTx_isSwitchRequested() && morseRx_isIdle() && morseTx_isIdle())
+        {
+            //Request to switch input sources
+            SWITCH_DECODE_SOURCE();
+            morseTx_clearSwitchRequest();
+            
+            if (IS_USER_INPUT_ACTIVE())
+            {
+                //User Input
+                printf("User input is now active.\r\n");
+            }
+            else
+            {
+                //TX Input
+                printf("Transmitter input is now active.\r\n");
+            }
+        }
     }    
 }

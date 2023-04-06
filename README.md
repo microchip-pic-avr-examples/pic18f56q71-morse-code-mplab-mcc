@@ -53,7 +53,7 @@ In addition, the Configurable Logic Cells (CLCs) are used to implement a dual in
 
 ### Transmitter
 
-Text to be transmitted is sent by UART to the microcontroller. When each character is received, the application loads it into a ring buffer. Wehn the character '\n' is received, the transmission sequence begins. 
+Text to be transmitted is sent by UART to the microcontroller. When each character is received, the application loads it into a ring buffer. When the character '\n' is received, the transmission sequence begins. 
 
 In Morse code, dot and dash are differentiated by the length of their on time. After transmitting the dot or dash, the transmitter must remain off for a certain period of time. The length of the off time depends on whether this is a:
 
@@ -111,10 +111,12 @@ During receive, if the timeout for the positive width measurement (UTMR A) is tr
 ### Transmitting a Message
 To transmit Morse code, type a message in the serial terminal, then press Enter. The message will not be sent until the microcontroller receives the '\n' character from the serial terminal. The transmitter output is LED0 on the Curiosity Nano. If the receiver is connected to the transmitter, then the output will also appear on the UART terminal.  
 
-*Note: Only characters A-Z and 0-9 are supported.*
+**Note: Only characters A-Z and 0-9 are supported.**  
+
+You can switch between user input and the transmitter by sending the '#' character when both are idle.  
 
 ### Receiving and Decoding a Message
-The receiver and decoder in this example has two possible inputs - an internal input, where the microcontroller decodes the same data that it transmits, or a user input, where either the pushbutton on the Curiosity Nano or an external button / telegraph key can be used to send data.
+The receiver and decoder in this example have two possible inputs - an internal input, where the microcontroller decodes the same data that it transmits, or a user input, where either the pushbutton on the Curiosity Nano or an external button / telegraph key can be used to send data.
 
 **Note: By default, the program uses internal input.**
 
@@ -127,6 +129,7 @@ Output Characters
 '-' - Dash  
 '|' - Letter Break  
 '/' - Word Break (Default)
+'?' - Unable to decode character (not shown)
 
 #### Operation (Internal Input)  
 Receiving and decoding is handled automatically by transmitting a message. 
@@ -150,8 +153,10 @@ You can find a copy of the Morse code alphabet and specification [here](https://
 
 ## Program Options
 
-### Switch to User Input  
+### Switch to User Input on Startup
 The receiver/decoder can be switched to manually keyed user input by uncommenting (`USER_INPUT_DECODE`) in `main.c`. 
+
+**Note: At runtime, send the '#' character when both the transmitter and receiver are idle to switch.**  
 
 ### Print Message on Startup
 If `PRINT_ON_STARTUP` in `main.c` is defined, a message such as "hello world" can be transmitted immediately on startup. The message can be changed in `main.c` as well. 
