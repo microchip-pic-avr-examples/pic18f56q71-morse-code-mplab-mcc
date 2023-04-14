@@ -61,7 +61,7 @@ In Morse code, dot and dash are differentiated by the length of their on time. A
 - Letter Break
 - Word Break
 
-For both simplicity and efficency, the state machine for the transmitter only is called when the transmitter state *could* change, as shown in the picture below, in red. Timer 2 is set up as a one-shot timer, with the period set by the state machine before starting. 
+For both simplicity and efficency, the state machine for the transmitter only is called when the transmitter state *could* change, as shown in the picture below, in red. Timer 2 is set up as a one-shot timer, with the period set by the state machine before starting. The output is assigned to both the LED and to a bit of the Signal Routing (SR) port peripheral.  
 
 ![TX Call Diagram](./images/txCallDiagram.png)  
 
@@ -73,7 +73,7 @@ The input debouncer utilized in this example is the 2 CLC configuration discusse
 
 ### Receiver Multiplexer
 
-For flexibility, this demo has two inputs. The default input is to connect the transmitter output to the receiver. Since the transmitter has tight timings, the receiver will always process the message correctly. The other input option is an external (debounced) input. This allows the user to decode their own entered message using the pushbutton on the Curiosity Nano or another signal source.
+For flexibility, this demo has two inputs. The default input is to connect the transmitter output to the receiver. Since the transmitter has tight timings, the receiver will always process the message correctly. The other input option is an external (debounced) input. This allows the user to decode their own entered message using the pushbutton on the Curiosity Nano or another signal source. To select between the two inputs, a bit from the SR Port is used. The SR port can be written to by the application like a normal I/O port. 
 
 To implement the multiplexer in the CLC, logic equivalent to the following is used.
 
@@ -81,12 +81,12 @@ To implement the multiplexer in the CLC, logic equivalent to the following is us
 
 ### Receiver and Decoder
 
-#### Universial Timers (UTMR)
-Universial Timers (UTMR) are used to receive and decode Morse code. The UTMRs are 16-bit timers with advanced start/stop/reset capabilities. When a rising edge occurs on the input to the UTMR, the timer starts and resets it's count. On the next edge (falling), the timer will stop and capture the current count. This generates a Capture Interrupt.
+#### Universal Timers (UTMR)
+Universal Timers (UTMR) are used to receive and decode Morse code. The UTMRs on this device are 16-bit timers with advanced start/stop/reset capabilities. When a rising edge occurs on the input to the UTMR, the timer starts and resets it's count. On the next edge (falling), the timer will stop and capture the current count. This generates a Capture Interrupt. Within a single UTMR, there are multiple Timer Units (TU). 
 
 If the pulse remains HIGH for longer than the timeout period set for the UTMR, the UTMR will reset to 0, and generate a PR Match Interrupt. In the PR Match Interrupt Service Routine (ISR), the UTMR is manually stopped to prevent more interrupts from being triggered. The UTMR is re-enabled shortly after, in the state machine.
 
-**Note: UTMR B uses inverted logic to UTMR A, but is otherwise identical.**
+**Note: UTMR TU16B uses inverted logic to UTMR TU16A, but is otherwise identical.**
 
 #### Processing Data  
 Each interrupt from the UTMR is used to move the internal decoder state machine to the next state. In most cases, the sequence received would be:
