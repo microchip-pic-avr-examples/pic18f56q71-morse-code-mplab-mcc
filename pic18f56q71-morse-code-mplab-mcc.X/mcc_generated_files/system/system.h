@@ -45,7 +45,7 @@
 #include "../clc/clc4.h"
 #include "../clkref/clkref.h"
 #include "../nco/nco1.h"
-#include "../vport/portw.h"
+#include "../srport/portw.h"
 #include "../timer/tmr2.h"
 #include "../timer/tmr4.h"
 #include "../timer/tu16a.h"

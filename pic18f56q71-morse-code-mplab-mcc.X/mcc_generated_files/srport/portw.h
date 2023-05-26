@@ -39,7 +39,7 @@
 
 /**
  * @ingroup portw
- * @brief Initializes the PORTW virtual port.
+ * @brief Initializes the PORTW signal routing port.
  * @param None.
  * @return None.
  */ 

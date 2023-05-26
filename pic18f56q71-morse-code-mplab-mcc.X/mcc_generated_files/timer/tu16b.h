@@ -7,7 +7,7 @@
  *
  * @brief This file contains the API prototypes for the TU16B module.
  *
- * @version TU16B Driver Version 2.0.1
+ * @version TU16B Driver Version 2.1.0
  */
  
 
@@ -71,7 +71,7 @@ void TU16B_Initialize(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_Start(void);
+void TU16B_Start(void);
 
 /**
  *@ingroup tu16b
@@ -80,7 +80,7 @@ inline void TU16B_Start(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_Stop(void);
+void TU16B_Stop(void);
 
 /**
  *@ingroup tu16b
@@ -145,7 +145,7 @@ void TU16B_Write(size_t timerVal);
  *      clock cycles to resolve the internal state. The user must be careful because if the timer is already running, any Stop/Reset-related ERS events that get
  *      processed will continue to affect the Run state of the timer.
  */
-inline void TU16B_CounterClear(void);
+void TU16B_CounterClear(void);
 
 /**
  *@ingroup tu16b
@@ -166,7 +166,7 @@ void TU16B_PeriodValueSet(uint16_t prVal);
  *@param None.
  *@return None.
  */
-inline void TU16B_PRMatchInterruptEnable(void);
+void TU16B_PRMatchInterruptEnable(void);
 
 /**
  *@ingroup tu16b
@@ -175,7 +175,7 @@ inline void TU16B_PRMatchInterruptEnable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_PRMatchInterruptDisable(void);
+void TU16B_PRMatchInterruptDisable(void);
 
 /**
  *@ingroup tu16b
@@ -184,7 +184,7 @@ inline void TU16B_PRMatchInterruptDisable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_ZeroInterruptEnable(void);
+void TU16B_ZeroInterruptEnable(void);
 
 /**
  *@ingroup tu16b
@@ -193,7 +193,7 @@ inline void TU16B_ZeroInterruptEnable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_ZeroInterruptDisable(void);
+void TU16B_ZeroInterruptDisable(void);
 
 /**
  *@ingroup tu16b
@@ -202,7 +202,7 @@ inline void TU16B_ZeroInterruptDisable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_CaptureInterruptEnable(void);
+void TU16B_CaptureInterruptEnable(void);
 
 /**
  *@ingroup tu16b
@@ -211,7 +211,7 @@ inline void TU16B_CaptureInterruptEnable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_CaptureInterruptDisable(void);
+void TU16B_CaptureInterruptDisable(void);
 
 /**
  *@ingroup tu16b
@@ -221,7 +221,7 @@ inline void TU16B_CaptureInterruptDisable(void);
  *@retval True - The counter has incremented from PR-1 to PR.
  *@retval False - The counter has not incremented from PR-1 to PR since this bit was last cleared.
  */
-inline bool TU16B_HasPRMatchOccured(void);
+bool TU16B_HasPRMatchOccured(void);
 
 /**
  *@ingroup tu16b
@@ -231,7 +231,7 @@ inline bool TU16B_HasPRMatchOccured(void);
  *@retval True - The counter has reset or rolled over to zero.
  *@retval False - The counter has not reset or rolled over since this bit was last cleared.
  */
-inline bool TU16B_HasResetOccured(void);
+bool TU16B_HasResetOccured(void);
 
 /**
  *@ingroup tu16b
@@ -241,7 +241,7 @@ inline bool TU16B_HasResetOccured(void);
  *@retval True - A capture event has occurred.
  *@retval False - A capture event has not occurred since this bit was last cleared.
  */
-inline bool TU16B_HasCaptureOccured(void);
+bool TU16B_HasCaptureOccured(void);
 
 /**
  *@ingroup tu16b
@@ -251,7 +251,7 @@ inline bool TU16B_HasCaptureOccured(void);
  *@retval True - UTMR is running and not being held in Reset by the External Reset Source (ERS).
  *@retval False - UTMR is not running or is held in Reset by the ERS.
  */
-inline bool TU16B_IsTimerRunning(void);
+bool TU16B_IsTimerRunning(void);
 
 /**
  *@ingroup tu16b
@@ -260,7 +260,7 @@ inline bool TU16B_IsTimerRunning(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_InterruptEnable(void);
+void TU16B_InterruptEnable(void);
 
 /**
  *@ingroup tu16b
@@ -269,7 +269,7 @@ inline void TU16B_InterruptEnable(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_InterruptDisable(void);
+void TU16B_InterruptDisable(void);
 
 /**
  *@ingroup tu16b
@@ -279,7 +279,7 @@ inline void TU16B_InterruptDisable(void);
  *@retval True - Interrupt is enabled.
  *@retval False - Interrupt is disabled.
  */
-inline bool TU16B_IsInterruptEnabled(void);
+bool TU16B_IsInterruptEnabled(void);
 
 /**
  *@ingroup tu16b
@@ -288,7 +288,7 @@ inline bool TU16B_IsInterruptEnabled(void);
  *@param None.
  *@return None.
  */
-inline void TU16B_InterruptFlagsClear(void);
+void TU16B_InterruptFlagsClear(void);
 
 /**
  *@ingroup tu16b
@@ -302,9 +302,63 @@ void __interrupt(irq(TU16B),base(8)) TU16B_ISR(void);
 
 /**
  *@ingroup tu16b
- *@brief Sets the function to be called during the Interrupt Service Routine (ISR).
+ *@brief Registers a callback function to be called for the Period Match interrupt event.
  *@pre Initialize the UTMR module with interrupts enabled before calling this API.
- *@param Address of the function to be set.
+ *@param void (* InterruptHandler(void)) - Pointer to the Period Match interrupt event handler.
+ *@return None.
+ */
+void TU16B_PRMatchInterruptHandlerSet(void (* InterruptHandler)(void));
+
+/**
+ *@ingroup tu16b
+ *@brief Default Period Match interrupt handler function.
+ *@pre Initialize the UTMR module with interrupts enabled before calling the ISR.
+ *@param None.
+ *@return None.
+ */
+void TU16B_PRMatchDefaultInterruptHandler(void);
+
+/**
+ *@ingroup tu16b
+ *@brief Registers a callback function to be called for the Zero Match interrupt event.
+ *@pre Initialize the UTMR module with interrupts enabled before calling this API.
+ *@param void (* InterruptHandler(void)) - Pointer to the Zero Match interrupt event handler.
+ *@return None.
+ */
+void TU16B_ZeroMatchInterruptHandlerSet(void (* InterruptHandler)(void));
+
+/**
+ *@ingroup tu16b
+ *@brief Default Zero Match interrupt handler function.
+ *@pre Initialize the UTMR module with interrupts enabled before calling the ISR.
+ *@param None.
+ *@return None.
+ */
+void TU16B_ZeroMatchDefaultInterruptHandler(void);
+
+/**
+ *@ingroup tu16b
+ *@brief Registers a callback function to be called for the Capture Match interrupt event.
+ *@pre Initialize the UTMR module with interrupts enabled before calling this API.
+ *@param void (* InterruptHandler(void)) - Pointer to the Capture Match interrupt event handler.
+ *@return None.
+ */
+void TU16B_CaptureMatchInterruptHandlerSet(void (* InterruptHandler)(void));
+
+/**
+ *@ingroup tu16b
+ *@brief Default Capture Match interrupt handler function.
+ *@pre Initialize the UTMR module with interrupts enabled before calling the ISR.
+ *@param None.
+ *@return None.
+ */
+void TU16B_CaptureMatchDefaultInterruptHandler(void);
+
+/**
+ *@ingroup tu16b
+ *@brief Registers a callback function to be called for the main interrupt event.
+ *@pre Initialize the UTMR module with interrupts enabled before calling this API.
+ *@param void (* InterruptHandler(void)) - Pointer to the interrupt event handler.
  *@return None.
  */
 void TU16B_InterruptHandlerSet(void (* InterruptHandler)(void));

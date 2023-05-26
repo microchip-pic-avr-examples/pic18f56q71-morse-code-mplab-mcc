@@ -80,8 +80,8 @@ void PORTW_Initialize(void)
     //PORTW 0; 
     PORTW = 0x0;
 
-    //PWCLKEN disabled; 
-    VPORTCON = 0x0;
+    //CLKEN disabled; 
+    PORTWCON = 0x0;
 
     //IOCWP
     IOCWP = 0x0;
@@ -94,12 +94,12 @@ void PORTW_Initialize(void)
 
 void PORTW_ClockEnable(void) 
 {
-    VPORTCONbits.PWCLKEN = 0x1;
+    PORTWCONbits.CLKEN = 0x1;
 }
 
 void PORTW_ClockDisable(void) 
 {
-    VPORTCONbits.PWCLKEN = 0x0;
+    PORTWCONbits.CLKEN = 0x0;
 }
 
 

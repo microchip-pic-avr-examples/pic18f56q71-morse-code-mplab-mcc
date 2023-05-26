@@ -19,6 +19,9 @@
         <logicalFolder name="nco" displayName="nco" projectFiles="true">
           <itemPath>mcc_generated_files/nco/nco1.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="srport" displayName="srport" projectFiles="true">
+          <itemPath>mcc_generated_files/srport/portw.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/pins.h</itemPath>
           <itemPath>mcc_generated_files/system/clock.h</itemPath>
@@ -37,9 +40,6 @@
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
           <itemPath>mcc_generated_files/uart/uart_drv_interface.h</itemPath>
           <itemPath>mcc_generated_files/uart/uart2.h</itemPath>
-        </logicalFolder>
-        <logicalFolder name="vport" displayName="vport" projectFiles="true">
-          <itemPath>mcc_generated_files/vport/portw.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>ringBuffer.h</itemPath>
@@ -75,6 +75,11 @@
             <itemPath>mcc_generated_files/nco/src/nco1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
+        <logicalFolder name="srport" displayName="srport" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/srport/src/portw.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/system/src/system.c</itemPath>
@@ -95,11 +100,6 @@
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/uart/src/uart2.c</itemPath>
-          </logicalFolder>
-        </logicalFolder>
-        <logicalFolder name="vport" displayName="vport" projectFiles="true">
-          <logicalFolder name="src" displayName="src" projectFiles="true">
-            <itemPath>mcc_generated_files/vport/src/portw.c</itemPath>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
@@ -132,7 +132,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.17.379"/>
+        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.18.386"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -161,40 +161,6 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
-      <HI-TECH-COMP>
-        <property key="additional-warnings" value="true"/>
-        <property key="asmlist" value="true"/>
-        <property key="call-prologues" value="false"/>
-        <property key="default-bitfield-type" value="true"/>
-        <property key="default-char-type" value="true"/>
-        <property key="define-macros" value=""/>
-        <property key="disable-optimizations" value="true"/>
-        <property key="extra-include-directories" value=""/>
-        <property key="favor-optimization-for" value="-speed,+space"/>
-        <property key="garbage-collect-data" value="true"/>
-        <property key="garbage-collect-functions" value="true"/>
-        <property key="identifier-length" value="255"/>
-        <property key="local-generation" value="false"/>
-        <property key="operation-mode" value="pro"/>
-        <property key="opt-xc8-compiler-strict_ansi" value="false"/>
-        <property key="optimization-assembler" value="true"/>
-        <property key="optimization-assembler-files" value="false"/>
-        <property key="optimization-debug" value="false"/>
-        <property key="optimization-invariant-enable" value="false"/>
-        <property key="optimization-invariant-value" value="16"/>
-        <property key="optimization-level" value="-O0"/>
-        <property key="optimization-speed" value="false"/>
-        <property key="optimization-stable-enable" value="false"/>
-        <property key="preprocess-assembler" value="true"/>
-        <property key="short-enums" value="true"/>
-        <property key="tentative-definitions" value="-fno-common"/>
-        <property key="undefine-macros" value=""/>
-        <property key="use-cci" value="false"/>
-        <property key="use-iar" value="false"/>
-        <property key="verbose" value="false"/>
-        <property key="warning-level" value="-3"/>
-        <property key="what-to-do" value="ignore"/>
-      </HI-TECH-COMP>
       <HI-TECH-LINK>
         <property key="additional-options-checksum" value=""/>
         <property key="additional-options-code-offset" value=""/>
@@ -370,7 +336,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.17.379"/>
+        <pack name="PIC18F-Q_DFP" vendor="Microchip" version="1.18.386"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -406,7 +372,7 @@
         <property key="default-bitfield-type" value="true"/>
         <property key="default-char-type" value="true"/>
         <property key="define-macros" value=""/>
-        <property key="disable-optimizations" value="false"/>
+        <property key="disable-optimizations" value="true"/>
         <property key="extra-include-directories" value=""/>
         <property key="favor-optimization-for" value="-speed,+space"/>
         <property key="garbage-collect-data" value="true"/>
@@ -420,7 +386,7 @@
         <property key="optimization-debug" value="false"/>
         <property key="optimization-invariant-enable" value="false"/>
         <property key="optimization-invariant-value" value="16"/>
-        <property key="optimization-level" value="-Os"/>
+        <property key="optimization-level" value="-O0"/>
         <property key="optimization-speed" value="false"/>
         <property key="optimization-stable-enable" value="false"/>
         <property key="preprocess-assembler" value="true"/>
