@@ -53,7 +53,7 @@ extern "C" {
     
     //ISR callback for TU16A
     void morseRx_TU16A_Callback(void);
-    
+        
     //ISR callback for TU16B
     void morseRx_TU16B_Callback(void);
     
