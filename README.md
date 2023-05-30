@@ -4,7 +4,7 @@
 
 # Morse Code Transmitter and Receiver with PIC18F56Q71
 
-Using the on-chip Core Independent Peripherals (CIPs), the PIC18F56Q71 microcontroller can transmit Morse code (via an LED) or receive/decode Morse code (by printing to serial terminal). To implement this functionality, the Universial Timer (UTMR), Signal Routing Port, Configurable Logic Cell (CLC), Clock Reference (CLKREF), Numerically Controlled Oscillator (NCO), UART, and Timer 2 CIPs are used. 
+Using the on-chip Core Independent Peripherals (CIPs), the PIC18F56Q71 microcontroller can transmit Morse code (via an LED) or receive/decode Morse code (by printing to serial terminal). To implement this functionality, the Universial Timer (UTMR), Signal Routing Port, Configurable Logic Cell (CLC), Clock Reference (CLKREF), Numerically Controlled Oscillator (NCO), UART, and Timer 2 CIPs are used.  
 
 ## Related Software
 
